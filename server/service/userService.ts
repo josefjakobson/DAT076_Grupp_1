@@ -33,4 +33,16 @@ export class UserService {
         const temp = this.users.find((user) => user.user_id === id);
         return (temp == undefined);
     }
+
+    async addUser(id: number): Promise<boolean> {
+        if ( await this.checkUserAvailability(id)) {
+            const user = {
+                user_id: id,
+                amount : 0,
+            }
+            this.users.push(user)
+            return true;
+        }
+        return false;
+    }
 }

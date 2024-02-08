@@ -1,11 +1,11 @@
 import { User } from "../model/user";
 
 export class UserService {
-   private users: User[] = [];
+    private users: User[] = [];
 
     async getCredits(id: number): Promise<number> {
-        const user = this.users.find((user) => user.user_id === id);
-        return user ? user.amount : 0;
+        const temp = this.users.find((user) => user.user_id === id);
+        return temp ? temp.amount : 0;
     }
 
     async addCredit(id: number, addAmount: number): Promise<boolean> {

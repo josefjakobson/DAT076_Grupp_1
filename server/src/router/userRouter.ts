@@ -6,7 +6,7 @@ const userService : UserService = new UserService();
 
 export const userRouter : Router = express.Router();
 
-userRouter.get("/", async (
+userRouter.get("/users", async (
     req : Request<{id : number}>, 
     res : Response<number | String>
 ) => {
@@ -18,7 +18,7 @@ userRouter.get("/", async (
     }
 });
 
-userRouter.post("/", async (
+userRouter.post("/credits", async (
     req : Request<{id : number, addAmount : number}>, 
     res : Response<Boolean>
 ) => {
@@ -30,7 +30,7 @@ userRouter.post("/", async (
     }
 });
 
-userRouter.post("/", async (
+userRouter.post("/credits", async (
     req : Request<{id : number, addAmount : number}>, 
     res : Response<Boolean>
 ) => {

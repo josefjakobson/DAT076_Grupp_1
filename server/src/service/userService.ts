@@ -14,10 +14,10 @@ export class UserService {
     }
 
     async addCredit(id: number, addAmount: number): Promise<boolean> {
+        console.log("addcredit")
         const temp = this.users.find((user) => user.user_id === id);
-        console.log(this.users)
         if (temp) {
-            temp.amount += addAmount;  
+            temp.amount += addAmount;
             return true; 
         }
         return false;
@@ -47,8 +47,8 @@ export class UserService {
                 user_id: id,
                 amount : 0,
             }
-            console.log(this.users)
             this.users.push(user)
+            console.log("adduser")
             return true;
         }
         return false;

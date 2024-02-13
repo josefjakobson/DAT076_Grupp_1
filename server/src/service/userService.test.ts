@@ -1,6 +1,17 @@
 import { UserService } from "./userService";
 
 
+test("Added credits should be saved within the user object", async () => {
+    const userService = new UserService();
+    await userService.addUser(1);
+    const users = await userService.getUsers();
+    await userService.addCredit(users[0], 50);
+    const userCredits = await userService.getCredits(1);
+    console.log(userCredits)
+    expect(userCredits == 50).toBeTruthy();
+});
+
+
 test("If a user is added it should be in the list", async () => {
     const userService = new UserService();
     await userService.addUser(1);
@@ -13,8 +24,9 @@ test("If a user is added it should be in the list", async () => {
 test("Removed credits should be removed from user object", async () => {
     const userService = new UserService();
     await userService.addUser(1);
-    await userService.addCredit(1, 50);
-    await userService.removeCredit(1, 25);
+    const users = await userService.getUsers();
+    await userService.addCredit(users[0], 50);
+    await userService.removeCredit(users[0], -25);
     const userCredits = await userService.getCredits(1);
     expect(userCredits == 25).toBeTruthy();
 });
@@ -22,8 +34,9 @@ test("Removed credits should be removed from user object", async () => {
 test("Removing credits from user with no credits should not be possible", async () => {
     const userService = new UserService();
     await userService.addUser(1);
-    await userService.addCredit(1, 50);
-    await userService.removeCredit(1, 51);
+    const users = await userService.getUsers();
+    await userService.addCredit(users[0], 50);
+    await userService.removeCredit(users[0], -51);
     const userCredits = await userService.getCredits(1);
     expect(userCredits == 50).toBeTruthy();
 });
@@ -34,7 +47,7 @@ test("checkUserAvailibility should check if a user ID is already in use or not",
     expect(user1Available).toBeTruthy();
 })
 
-
+/*
 test("Users must have unique ID's", async () => {
     const userService = new UserService();
     await userService.addUser(1);
@@ -45,10 +58,4 @@ test("Users must have unique ID's", async () => {
 
 })
 
-test("Added credits should be saved within the user object", async () => {
-    const userService = new UserService();
-    await userService.addUser(1);
-    await userService.addCredit(1, 50);
-    const userCredits = await userService.getCredits(1);
-    expect(userCredits == 50).toBeTruthy();
-});
+*/

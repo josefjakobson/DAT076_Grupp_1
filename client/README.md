@@ -44,3 +44,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+When the app first starts, the user sees...
+The frontend sends a [GET] request to /
+The backend returns a response with body ...
+The frontend displays ... to the user
+The user performs the following input: ...
+The frontend sends a [GET/PUT/...] request to the backend with body ...
+Etc.

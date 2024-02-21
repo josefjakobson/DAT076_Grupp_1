@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/josefjakobson/DAT076_Grupp_1/issues"
   },
-  "homepage": "https://github.com/josefjakobson/DAT076_Grupp_1#readme"
+  "homepage": "https://github.com/josefjakobson/DAT076_Grupp_1#readme",
+  "dependencies": {
+    "sass": "^1.71.1"
+  }
 }

@@ -4,7 +4,9 @@ import './App.css';
 import axios from 'axios';
 import Banner from './components/banner';
 import Thenavbar from './components/navbar';
-
+import CardGame from './components/cardGames';
+import './styles/style.scss'
+import HomeView from './views/HomeView';
 // Define the User interface
 export interface User {
   user_id: number;
@@ -51,10 +53,7 @@ function App() {
   return (
     <div className="App">
       <Thenavbar></Thenavbar>
-        <Banner />
-
-      <h1>Gamble away your money today</h1>
-      <h4>All my CSN-money is gone :</h4>
+      <HomeView/>
       <UserMoney credit={userCredit} />
     </div>
   );

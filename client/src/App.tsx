@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import Banner from './components/banner';
+import Thenavbar from './components/navbar';
 
 // Define the User interface
 export interface User {
@@ -16,7 +18,6 @@ function App() {
     if (credit === undefined) {
       return <div>Loading...</div>; // Handle case where user info is not available yet
     }
-
     return (
       <div>
         <h4>User: 1</h4>
@@ -49,6 +50,9 @@ function App() {
 
   return (
     <div className="App">
+      <Thenavbar></Thenavbar>
+        <Banner />
+
       <h1>Gamble away your money today</h1>
       <h4>All my CSN-money is gone :</h4>
       <UserMoney credit={userCredit} />

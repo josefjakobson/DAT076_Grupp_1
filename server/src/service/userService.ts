@@ -2,7 +2,7 @@ import { ConsoleMessage } from "puppeteer";
 import { User } from "../model/user";
 
 export class UserService {
-    private users: User[] = [];
+    private users: User[] = [{user_id: 1, amount: 23}];
 
     async getUsers(): Promise<User[]>{
         return this.users;

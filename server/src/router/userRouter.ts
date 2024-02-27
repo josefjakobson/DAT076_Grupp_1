@@ -23,7 +23,7 @@ userRouter.post("/user", async (
     res : Response<Boolean>
 ) => {
     try {
-        const success = await userService.addUser(req.body.id);
+        const success = await userService.addUser(req.query.id);
         res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -35,7 +35,7 @@ userRouter.get("/credit", async (
     res : Response<string | boolean>
 ) => {
     try {
-        const credits = await userService.getCredits(req.body.id);
+        const credits = await userService.getCredits(req.query.id);
         console.log(credits);
         res.status(200).send(credits.toString());
     } catch (e: any) {

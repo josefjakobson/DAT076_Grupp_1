@@ -26,9 +26,11 @@ export class UserService {
 
     
     async getCredits(id: number): Promise<number|boolean> {
-        console.log("here")
+        console.log(this.users)
+        console.log(id)
+
         const temp = this.users.find((user) => user.user_id == id);
-        console.log(temp)
+        //console.log(temp)
         return temp ? temp.amount : false;
     }
 

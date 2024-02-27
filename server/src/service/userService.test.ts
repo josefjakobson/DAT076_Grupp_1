@@ -47,7 +47,7 @@ test("checkUserAvailibility should check if a user ID is already in use or not",
     expect(user1Available).toBeTruthy();
 })
 
-/*
+
 test("Users must have unique ID's", async () => {
     const userService = new UserService();
     await userService.addUser(1);
@@ -58,4 +58,3 @@ test("Users must have unique ID's", async () => {
 
 })
 
-*/

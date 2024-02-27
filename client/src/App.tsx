@@ -31,12 +31,12 @@ function App() {
   async function updateCredit() {
     setTimeout(async () => {
       try {
-        const response = await axios.get<number>("http://localhost:8080/credit", {
+        const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
           params: {
             id: 1
           }
         });        
-        console.log(response);
+        console.log(response.data);
         const userData: number = response.data;
         setUserCredit(userData); // Update userInfo state with received data
 

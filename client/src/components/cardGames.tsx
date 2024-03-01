@@ -16,6 +16,7 @@ export default function CardGame(props: { gameName: string; }) {
                 <Card.Text>
                     Cost per game: 20 Credits
                 </Card.Text>
+                
                 <Button variant="outline-dark">Go to Game</Button>
             </Card.Body>
         </Card>

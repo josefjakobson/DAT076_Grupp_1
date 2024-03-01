@@ -52,9 +52,10 @@ function App() {
 
   return (
     <div className="App">
-      <Thenavbar></Thenavbar>
+      
+      {/* <Thenavbar></Thenavbar>
       <HomeView/>
-      <UserMoney credit={userCredit} />
+      <UserMoney credit={userCredit} /> */}
     </div>
   );
 }

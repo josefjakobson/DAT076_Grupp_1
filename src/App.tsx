@@ -16,50 +16,50 @@ export interface User {
 }
 
 function App() {
-  const [userCredit, setUserCredit] = useState<number | undefined>(undefined);
+  // const [userCredit, setUserCredit] = useState<number | undefined>(undefined);
 
-  function UserMoney({ credit }: { credit: number | undefined }) {
-    if (credit === undefined) {
-      return <div>Loading...</div>; // Handle case where user info is not available yet
-    }
-    return (
-      <div>
-        <h4>User: 1</h4>
-        <h4>Money: {credit}</h4>
-      </div>
-    );
-  }
+  // function UserMoney({ credit }: { credit: number | undefined }) {
+  //   if (credit === undefined) {
+  //     return <div>Loading...</div>; // Handle case where user info is not available yet
+  //   }
+  //   return (
+  //     <div>
+  //       <h4>User: 1</h4>
+  //       <h4>Money: {credit}</h4>
+  //     </div>
+  //   );
+  // }
 
-  async function updateCredit() {
-    setTimeout(async () => {
-      try {
-        const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
-          params: {
-            id: 1
-          }
-        });        
-        console.log(response.data);
-        const userData: number = response.data;
-        setUserCredit(userData); // Update userInfo state with received data
+  // async function updateCredit() {
+  //   setTimeout(async () => {
+  //     try {
+  //       const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
+  //         params: {
+  //           id: 1
+  //         }
+  //       });        
+  //       console.log(response.data);
+  //       const userData: number = response.data;
+  //       setUserCredit(userData); // Update userInfo state with received data
 
-      } catch (error: any) {
-        console.log(error);
-      }
-    });
-  }
+  //     } catch (error: any) {
+  //       console.log(error);
+  //     }
+  //   });
+  // }
 
-  useEffect(() => {
-    updateCredit();
-  }, []);
+  // useEffect(() => {
+  //   updateCredit();
+  // }, []);
 
-  return (
-    <div className="App">
-      <Thenavbar></Thenavbar>
-      <HomeView/>
-      <Roulette></Roulette>
-      <UserMoney credit={userCredit} />
-    </div>
-  );
+  // return (
+  //   <div className="App">
+  //     <Thenavbar></Thenavbar>
+  //     <HomeView/>
+  //     <Roulette></Roulette>
+  //     <UserMoney credit={userCredit} />
+  //   </div>
+  // );
 }
 
 export default App;

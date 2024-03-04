@@ -1,15 +1,27 @@
 import React from "react";
 import "./style.css";
+import App, { User } from "../../../App";
+import axios from "axios";
 
-class Roulette extends React.Component {
+interface RouletteProps {
+  user_id: number;
+}
+
+class Roulette extends React.Component<RouletteProps> {
   componentDidMount(): void {
     const $inner: HTMLElement | null = document.querySelector('.inner');
-    const $spin: HTMLButtonElement | null = document.getElementById('spin') as HTMLButtonElement | null;
-    const $reset: HTMLButtonElement | null = document.getElementById('reset') as HTMLButtonElement | null;
+    const $spin: HTMLButtonElement | null = document.getElementById('spin') as HTMLButtonElement;
+    const $bet_r: HTMLButtonElement | null = document.getElementById('bet_r') as HTMLButtonElement;
+    const $bet_b: HTMLButtonElement | null = document.getElementById('bet_b') as HTMLButtonElement;
+    const $bet_g: HTMLButtonElement | null = document.getElementById('bet_g') as HTMLButtonElement;
+    const $reset: HTMLButtonElement | null = document.getElementById('reset') as HTMLButtonElement;
     const $data: HTMLElement | null = document.querySelector('.data');
     const $mask: HTMLElement | null = document.querySelector('.mask');
     const maskDefault: string = 'Place Your Bets';
     const timer: number = 9000;
+    var active_bet_r: number = 0;
+    var active_bet_b: number = 0;
+    var active_bet_g: number = 0;
   
     const red: number[] = [32,19,21,25,34,27,36,30,23,5,16,1,14,9,18,7,12,3];
   
@@ -37,6 +49,9 @@ class Roulette extends React.Component {
   
         if ($spin) {
           $spin.style.display = 'none';
+          $bet_r.disabled = true;
+          $bet_b.disabled = true;
+          $bet_g.disabled = true;
         }
         if ($reset) {
           $reset.classList.add('disabled');
@@ -53,7 +68,7 @@ class Roulette extends React.Component {
   
         setTimeout(() => {
           if ($mask) {
-            $mask.textContent = 'No More Bets';
+            $mask.textContent = 'Spinning...';
           }
         }, timer/2);
   
@@ -71,11 +86,10 @@ class Roulette extends React.Component {
   
           if(red.includes(randomNumber)) {
             color = 'red';
+          } else if (randomNumber === 0){
+            color = 'green';
           } else {
             color = 'black';
-          }
-          if(randomNumber === 0) {
-            color = 'green';
           }
   
           const resultNumber: HTMLElement | null = document.querySelector('.result-number');
@@ -96,6 +110,16 @@ class Roulette extends React.Component {
           if ($inner) {
             $inner.classList.add('rest');
           }
+          if (active_bet_r && color === 'red') {
+            this.add_credits(active_bet_r, 2);
+          } else if (active_bet_b && color === 'black') {
+            this.add_credits(active_bet_b, 2);
+          } else if (active_bet_g && color === 'green') {
+            this.add_credits(active_bet_g, 35)
+          }
+          active_bet_r = 0;
+          active_bet_b = 0;
+          active_bet_g = 0;
         }, timer);
       });
     }
@@ -117,8 +141,96 @@ class Roulette extends React.Component {
         if ($data) {
           $data.classList.remove('reveal');
         }
+        $bet_r.disabled = false;
+        $bet_b.disabled = false;
+        $bet_g.disabled = false;
       });
     }
+
+    const errorMessage : HTMLElement | null = document.querySelector('.errorMessage');
+
+    if ($bet_r) {
+      const red_bet: HTMLElement | null = document.querySelector('.red_bet');
+      $bet_r.addEventListener('click', async () => {
+        if (red_bet) {
+          if (await this.check_credits()) {
+            this.remove_credits();
+            active_bet_r = active_bet_r + 20;
+            red_bet.textContent = active_bet_r.toString();
+          } else {
+            if (errorMessage) {
+              errorMessage.textContent = "You do not have enough credits."
+            }
+          }
+        }
+      })
+    }
+    if ($bet_b) {
+      const black_bet: HTMLElement | null = document.querySelector('.black_bet');
+      $bet_b.addEventListener('click', async () => {
+        if (black_bet) {
+          if (await this.check_credits()) {
+            this.remove_credits();
+            active_bet_b = active_bet_b + 20;
+            black_bet.textContent = active_bet_b.toString();
+          } else {
+            if (errorMessage) {
+              errorMessage.textContent = "You do not have enough credits."
+            }
+          }
+        }
+      })
+    }
+    if ($bet_g) {
+      const green_bet: HTMLElement | null = document.querySelector('.green_bet');
+      $bet_g.addEventListener('click', async () => {
+        if (green_bet) {
+          if (await this.check_credits()) {
+            this.remove_credits();
+            active_bet_g = active_bet_g + 20;
+            green_bet.textContent = active_bet_g.toString();
+          } else {
+            if (errorMessage) {
+              errorMessage.textContent = "You do not have enough credits."
+            }
+          }
+        }
+      })
+    }
+  }
+  
+async check_credits(): Promise<boolean> {
+  try {
+    const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
+      params: {
+        id: this.props.user_id
+      }
+    });
+    
+    const credit: number = response.data;
+    return credit >= 20;
+  } catch (error) {
+    console.error("Error fetching user credits:", error);
+    return false;
+  }
+}
+
+async remove_credits() {
+  await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+    params: {
+      id: this.props.user_id,
+      changeAmount: -20
+    }
+  });
+  }
+
+  async add_credits(number : number, multiplier : number) {
+    await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+      params: {
+        id: this.props.user_id,
+        changeAmount: number * multiplier
+      }
+    });
   }
   
   
@@ -130,8 +242,10 @@ class Roulette extends React.Component {
         <title>CodePen - CSS Roulette Wheel</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" /><link rel="stylesheet" href="./style.css" />
         <div className="main">
-          <button type="button" className="btn" id="spin"><span className="btn-label">Spin</span></button>
-          <button type="button" className="btn btn-reset" id="reset"><span className="btn-label">New Game</span></button> 
+          <center>
+            <button type="button" className="btn" id="spin"><span className="btn-label">Spin</span></button> 
+            <button type="button" className="btn btn-reset" id="reset"><span className="btn-label">New Game</span></button>
+          </center>
           <div className="plate" id="plate">
             <ul className="inner">
               <li className="number"><label><input type="radio" name="pit" value="32" /><span className="pit">32</span></label></li>
@@ -174,7 +288,7 @@ class Roulette extends React.Component {
             </ul>
             <div className="data">
               <div className="data-inner">
-                <div className="mask" />
+                <div className="mask"/>
                 <div className="result">
                   <div className="result-number">00</div>
                   <div className="result-color">red</div>        
@@ -182,6 +296,26 @@ class Roulette extends React.Component {
               </div>
             </div>
           </div>
+          <div className="bet-buttons-container">
+            <button type="button" className="btn" id="bet_r">
+              <span className="btn-label">Bet 20 credits on red</span>
+            </button>
+            <button type="button" className="btn" id="bet_b">
+              <span className="btn-label">Bet 20 credits on black</span>
+            </button>
+            <button type="button" className="btn" id="bet_g">
+              <span className="btn-label">Bet 20 credits on green</span>
+            </button>
+          </div>
+          <div className="errorMessage"></div>
+          <center>
+            <div className="errorMessage"></div>
+          </center>
+          <center>
+            <div className="red_bet"></div>
+            <div className="black_bet"></div>
+            <div className="green_bet"></div>
+          </center>
         </div>
       </div>
     );

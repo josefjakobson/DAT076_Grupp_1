@@ -9,6 +9,7 @@ import { Outlet, Link } from "react-router-dom";
 
 
 export default function TheNavbar() {
+    //const credits = props;
     return (
       <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -19,20 +20,9 @@ export default function TheNavbar() {
           <Nav className="me-auto">
             <Nav.Link href="/Bingo">Home</Nav.Link>
             <Nav.Link href="#link">About</Nav.Link>
-            <NavDropdown title="Games" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        <Button variant="outline-dark">Credit</Button>
+        <Button variant="outline-dark">Credits</Button>
 
       </Container>
     </Navbar>

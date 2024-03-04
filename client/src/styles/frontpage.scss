@@ -1,7 +1,6 @@
 #root {
     width: 100vw;
     height: 100vh;
-    display: flex;
 
     .bannerLogin {
         display: flex;
@@ -9,6 +8,12 @@
         justify-content: center;
     }
 }
+
+#frontMain {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 
 #loginMain {
     display: grid;

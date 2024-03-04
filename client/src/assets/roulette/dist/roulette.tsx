@@ -4,12 +4,18 @@ import "./style.css";
 class Roulette extends React.Component {
   componentDidMount(): void {
     const $inner: HTMLElement | null = document.querySelector('.inner');
-    const $spin: HTMLButtonElement | null = document.getElementById('spin') as HTMLButtonElement | null;
-    const $reset: HTMLButtonElement | null = document.getElementById('reset') as HTMLButtonElement | null;
+    const $spin: HTMLButtonElement | null = document.getElementById('spin') as HTMLButtonElement;
+    const $bet_r: HTMLButtonElement | null = document.getElementById('bet_r') as HTMLButtonElement;
+    const $bet_b: HTMLButtonElement | null = document.getElementById('bet_b') as HTMLButtonElement;
+    const $bet_g: HTMLButtonElement | null = document.getElementById('bet_g') as HTMLButtonElement;
+    const $reset: HTMLButtonElement | null = document.getElementById('reset') as HTMLButtonElement;
     const $data: HTMLElement | null = document.querySelector('.data');
     const $mask: HTMLElement | null = document.querySelector('.mask');
     const maskDefault: string = 'Place Your Bets';
     const timer: number = 9000;
+    var active_bet_r: number = 0;
+    var active_bet_b: number = 0;
+    var active_bet_g: number = 0;
   
     const red: number[] = [32,19,21,25,34,27,36,30,23,5,16,1,14,9,18,7,12,3];
   
@@ -37,6 +43,9 @@ class Roulette extends React.Component {
   
         if ($spin) {
           $spin.style.display = 'none';
+          $bet_r.disabled = true;
+          $bet_b.disabled = true;
+          $bet_g.disabled = true;
         }
         if ($reset) {
           $reset.classList.add('disabled');
@@ -117,8 +126,48 @@ class Roulette extends React.Component {
         if ($data) {
           $data.classList.remove('reveal');
         }
+        $bet_r.disabled = false;
+        $bet_b.disabled = false;
+        $bet_g.disabled = false;
       });
     }
+
+    if ($bet_r) {
+      const red_bet: HTMLElement | null = document.querySelector('.red_bet');
+      $bet_r.addEventListener('click', () => {
+        if (red_bet) {
+          if (check_credits()) {
+            active_bet_r = active_bet_r + 20;
+            red_bet.textContent = active_bet_r.toString();
+          }
+        }
+      })
+    }
+    if ($bet_b) {
+      const black_bet: HTMLElement | null = document.querySelector('.black_bet');
+      $bet_b.addEventListener('click', () => {
+        if (black_bet) {
+          if (check_credits()) {
+            active_bet_b = active_bet_b + 20;
+            black_bet.textContent = active_bet_b.toString();
+          }
+        }
+      })
+    }
+    if ($bet_g) {
+      const green_bet: HTMLElement | null = document.querySelector('.green_bet');
+      $bet_g.addEventListener('click', () => {
+        if (green_bet) {
+          if (check_credits()) {
+            active_bet_g = active_bet_g + 20;
+            green_bet.textContent = active_bet_g.toString();
+          }
+        }
+      })
+    }
+  }
+  check_credits() : boolean {
+    
   }
   
   
@@ -130,8 +179,10 @@ class Roulette extends React.Component {
         <title>CodePen - CSS Roulette Wheel</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" /><link rel="stylesheet" href="./style.css" />
         <div className="main">
-          <button type="button" className="btn" id="spin"><span className="btn-label">Spin</span></button>
-          <button type="button" className="btn btn-reset" id="reset"><span className="btn-label">New Game</span></button> 
+          <center>
+            <button type="button" className="btn" id="spin"><span className="btn-label">Spin</span></button> 
+            <button type="button" className="btn btn-reset" id="reset"><span className="btn-label">New Game</span></button>
+          </center>
           <div className="plate" id="plate">
             <ul className="inner">
               <li className="number"><label><input type="radio" name="pit" value="32" /><span className="pit">32</span></label></li>
@@ -174,7 +225,7 @@ class Roulette extends React.Component {
             </ul>
             <div className="data">
               <div className="data-inner">
-                <div className="mask" />
+                <div className="mask"/>
                 <div className="result">
                   <div className="result-number">00</div>
                   <div className="result-color">red</div>        
@@ -182,6 +233,26 @@ class Roulette extends React.Component {
               </div>
             </div>
           </div>
+          <div className="bet-buttons-container">
+            <button type="button" className="btn" id="bet_r">
+              <span className="btn-label">Bet 20 credits on red</span>
+            </button>
+            <button type="button" className="btn" id="bet_b">
+              <span className="btn-label">Bet 20 credits on black</span>
+            </button>
+            <button type="button" className="btn" id="bet_g">
+              <span className="btn-label">Bet 20 credits on green</span>
+            </button>
+          </div>
+          <div className="errorMessage"></div>
+          <center>
+            <div className="errorMessage"></div>
+          </center>
+          <center>
+            <div className="red_bet"></div>
+            <div className="black_bet"></div>
+            <div className="green_bet"></div>
+          </center>
         </div>
       </div>
     );

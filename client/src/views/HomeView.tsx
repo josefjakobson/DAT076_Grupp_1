@@ -2,15 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../components/banner';
 import CardGame from '../components/cardGames';
-import Navbar from '../components/Navbar';
+import Thenavbar from '../components/Navbar';
+import useModal from '../hooks/useModal';
+import Modal from '../components/creditModal';
 //import '../styles/style.scss'
 
 
 export default function HomeView() {
-    return (
+  const {isOpen, toggle} = useModal();
+
+  return (
 
     <>
-      <Navbar />
+      <Modal isOpen = {isOpen} toggle = {toggle}></Modal>
+      <Thenavbar open = {toggle}/>
       <Banner />
       <main id="frontMain">
         <CardGame gameName={"Roulette"} />

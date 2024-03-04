@@ -96,12 +96,6 @@ class Roulette extends React.Component {
           if ($inner) {
             $inner.classList.add('rest');
           }
-  
-          const thisResult: string = `<li class="previous-result color-${color}"><span class="previous-number">${randomNumber}</span><span class="previous-color">${color}</span></li>`;
-          const previousList: HTMLElement | null = document.querySelector('.previous-list');
-          if (previousList) {
-            previousList.insertAdjacentHTML('afterbegin', thisResult);
-          }
         }, timer);
       });
     }
@@ -187,11 +181,6 @@ class Roulette extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="previous-results">
-            <ol className="previous-list">
-              <li className="visuallyhidden placeholder">No results yet.</li>
-            </ol>
           </div>
         </div>
       </div>

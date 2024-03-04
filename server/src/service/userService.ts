@@ -2,7 +2,7 @@
 import { User } from "../model/user";
 
 export class UserService {
-    private users: User[] = [{user_id: 1, amount: 23}];
+    private users: User[] = [{user_id: 1, amount: 45}];
 
     async getUsers(): Promise<User[]>{
         return this.users;
@@ -25,17 +25,22 @@ export class UserService {
     }
 
     
-    async getCredits(id: number): Promise<number|boolean> {
+    async getCredits(id: number | undefined): Promise<number | boolean> {
         console.log(this.users)
-        console.log(id)
-
-        const temp = this.users.find((user) => user.user_id == id);
-        //console.log(temp)
-        return temp ? temp.amount : false;
+        if (id === undefined) {
+            console.error("ID is undefined");
+            return false;
+        }
+        const user = this.users.find((user) => user.user_id === id);
+        if (!user) {
+            console.error("User not found");
+            return false;
+        }
+        return user.amount;
     }
+    
 
     async addCredit(user: User|undefined, addAmount: number): Promise<boolean> {
-        console.log(user)
         if (user) {
             user.amount += addAmount;
             console.log(user);

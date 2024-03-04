@@ -17,6 +17,7 @@ export default function HomeView() {
         <CardGame gameName={"Roulette"} />
         <CardGame gameName={"Dice Game"} />
         <CardGame gameName={"Bingo"} />
+        <Roulette user_id={1} />
       </main>
     </>)
   }

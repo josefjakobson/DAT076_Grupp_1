@@ -4,7 +4,7 @@ import App, { User } from "../../../App";
 import axios from "axios";
 
 interface RouletteProps {
-  user: User;
+  user_id: number;
 }
 
 class Roulette extends React.Component<RouletteProps> {
@@ -203,7 +203,7 @@ async check_credits(): Promise<boolean> {
   try {
     const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
       params: {
-        id: this.props.user.user_id
+        id: this.props.user_id
       }
     });
     
@@ -218,7 +218,7 @@ async check_credits(): Promise<boolean> {
 async remove_credits() {
   await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
     params: {
-       id: this.props.user.user_id,
+      id: this.props.user_id,
       changeAmount: -20
     }
   });
@@ -227,7 +227,7 @@ async remove_credits() {
   async add_credits(number : number, multiplier : number) {
     await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
       params: {
-        id: this.props.user.user_id,
+        id: this.props.user_id,
         changeAmount: number * multiplier
       }
     });

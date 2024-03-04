@@ -4,12 +4,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
-import { Outlet, Link } from "react-router-dom";
+import creditModal from "./creditModal";
+import useModal from '../hooks/useModal';
+import Modal from './creditModal';
 
 
+export default function TheNavbar({ open }: { open: () => void } ) {
 
-export default function TheNavbar() {
-    //const credits = props;
     return (
       <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -18,16 +19,16 @@ export default function TheNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/Bingo">Home</Nav.Link>
+            <Nav.Link href="/games">Home</Nav.Link>
             <Nav.Link href="#link">About</Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Button variant="outline-dark">Credits</Button>
-
-      </Container>
+        <Button variant="outline-dark" onClick={open}>Credits</Button>
+    </Container>
     </Navbar>
       </>
     )
+
   }
 
 

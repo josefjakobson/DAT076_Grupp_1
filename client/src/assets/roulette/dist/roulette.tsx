@@ -136,7 +136,7 @@ class Roulette extends React.Component {
       const red_bet: HTMLElement | null = document.querySelector('.red_bet');
       $bet_r.addEventListener('click', () => {
         if (red_bet) {
-          if (check_credits()) {
+          if (this.check_credits()) {
             active_bet_r = active_bet_r + 20;
             red_bet.textContent = active_bet_r.toString();
           }
@@ -147,7 +147,7 @@ class Roulette extends React.Component {
       const black_bet: HTMLElement | null = document.querySelector('.black_bet');
       $bet_b.addEventListener('click', () => {
         if (black_bet) {
-          if (check_credits()) {
+          if (this.check_credits()) {
             active_bet_b = active_bet_b + 20;
             black_bet.textContent = active_bet_b.toString();
           }
@@ -158,7 +158,7 @@ class Roulette extends React.Component {
       const green_bet: HTMLElement | null = document.querySelector('.green_bet');
       $bet_g.addEventListener('click', () => {
         if (green_bet) {
-          if (check_credits()) {
+          if (this.check_credits()) {
             active_bet_g = active_bet_g + 20;
             green_bet.textContent = active_bet_g.toString();
           }
@@ -167,7 +167,7 @@ class Roulette extends React.Component {
     }
   }
   check_credits() : boolean {
-    
+    return true;
   }
   
   

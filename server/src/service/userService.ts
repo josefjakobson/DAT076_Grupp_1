@@ -27,6 +27,7 @@ export class UserService {
     
     async getCredits(id: number | undefined): Promise<number | boolean> {
         console.log(this.users)
+        console.log(id)
         if (id === undefined) {
             console.error("ID is undefined");
             return false;

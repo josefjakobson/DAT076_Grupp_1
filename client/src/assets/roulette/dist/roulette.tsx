@@ -1,6 +1,5 @@
 import React from "react";
 import "./style.css";
-import App, { User } from "../../../App";
 import axios from "axios";
 
 interface RouletteProps {
@@ -199,42 +198,46 @@ class Roulette extends React.Component<RouletteProps> {
     }
   }
   
-async check_credits(): Promise<boolean> {
-  try {
-    const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
-      params: {
-        id: this.props.user_id
-      }
-    });
-    
-    const credit: number = response.data;
-    return credit >= 20;
-  } catch (error) {
-    console.error("Error fetching user credits:", error);
-    return false;
-  }
-}
-
-async remove_credits() {
-  await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
-    params: {
-      id: this.props.user_id,
-      changeAmount: -20
+  async check_credits(): Promise<boolean> {
+    console.log(this.props.user_id);
+    try {
+      const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
+        params: {
+          id: this.props.user_id
+        }
+      });
+      const credit: number = response.data;
+      return credit >= 20;
+    } catch (error) {
+      console.error("Error fetching user credits:", error);
+      return false;
     }
-  });
   }
 
-  async add_credits(number : number, multiplier : number) {
-    await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
-      params: {
+  async remove_credits() {
+    console.log(this.props.user_id);
+    try {
+      await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+        id: this.props.user_id,
+        changeAmount: -20
+      });
+    } catch (error) {
+      console.error("Error removing credits:", error);
+    }
+  }
+
+  async add_credits(number: number, multiplier: number) {
+    console.log(this.props.user_id);
+    try {
+      await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
         id: this.props.user_id,
         changeAmount: number * multiplier
-      }
-    });
+      });
+    } catch (error) {
+      console.error("Error adding credits:", error);
+    }
   }
   
-  
-
   render() {
     return (
       <div>

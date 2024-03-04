@@ -1,7 +1,13 @@
 import React from "react";
 import "./style.css";
+import App, { User } from "../../../App";
+import axios from "axios";
 
-class Roulette extends React.Component {
+interface RouletteProps {
+  user: User;
+}
+
+class Roulette extends React.Component<RouletteProps> {
   componentDidMount(): void {
     const $inner: HTMLElement | null = document.querySelector('.inner');
     const $spin: HTMLButtonElement | null = document.getElementById('spin') as HTMLButtonElement;
@@ -62,7 +68,7 @@ class Roulette extends React.Component {
   
         setTimeout(() => {
           if ($mask) {
-            $mask.textContent = 'No More Bets';
+            $mask.textContent = 'Spinning...';
           }
         }, timer/2);
   
@@ -80,11 +86,10 @@ class Roulette extends React.Component {
   
           if(red.includes(randomNumber)) {
             color = 'red';
+          } else if (randomNumber === 0){
+            color = 'green';
           } else {
             color = 'black';
-          }
-          if(randomNumber === 0) {
-            color = 'green';
           }
   
           const resultNumber: HTMLElement | null = document.querySelector('.result-number');
@@ -105,6 +110,16 @@ class Roulette extends React.Component {
           if ($inner) {
             $inner.classList.add('rest');
           }
+          if (active_bet_r && color === 'red') {
+            this.add_credits(active_bet_r, 2);
+          } else if (active_bet_b && color === 'black') {
+            this.add_credits(active_bet_b, 2);
+          } else if (active_bet_g && color === 'green') {
+            this.add_credits(active_bet_g, 35)
+          }
+          active_bet_r = 0;
+          active_bet_b = 0;
+          active_bet_g = 0;
         }, timer);
       });
     }
@@ -132,42 +147,90 @@ class Roulette extends React.Component {
       });
     }
 
+    const errorMessage : HTMLElement | null = document.querySelector('.errorMessage');
+
     if ($bet_r) {
       const red_bet: HTMLElement | null = document.querySelector('.red_bet');
-      $bet_r.addEventListener('click', () => {
+      $bet_r.addEventListener('click', async () => {
         if (red_bet) {
-          if (this.check_credits()) {
+          if (await this.check_credits()) {
+            this.remove_credits();
             active_bet_r = active_bet_r + 20;
             red_bet.textContent = active_bet_r.toString();
+          } else {
+            if (errorMessage) {
+              errorMessage.textContent = "You do not have enough credits."
+            }
           }
         }
       })
     }
     if ($bet_b) {
       const black_bet: HTMLElement | null = document.querySelector('.black_bet');
-      $bet_b.addEventListener('click', () => {
+      $bet_b.addEventListener('click', async () => {
         if (black_bet) {
-          if (this.check_credits()) {
+          if (await this.check_credits()) {
+            this.remove_credits();
             active_bet_b = active_bet_b + 20;
             black_bet.textContent = active_bet_b.toString();
+          } else {
+            if (errorMessage) {
+              errorMessage.textContent = "You do not have enough credits."
+            }
           }
         }
       })
     }
     if ($bet_g) {
       const green_bet: HTMLElement | null = document.querySelector('.green_bet');
-      $bet_g.addEventListener('click', () => {
+      $bet_g.addEventListener('click', async () => {
         if (green_bet) {
-          if (this.check_credits()) {
+          if (await this.check_credits()) {
+            this.remove_credits();
             active_bet_g = active_bet_g + 20;
             green_bet.textContent = active_bet_g.toString();
+          } else {
+            if (errorMessage) {
+              errorMessage.textContent = "You do not have enough credits."
+            }
           }
         }
       })
     }
   }
-  check_credits() : boolean {
-    return true;
+  
+async check_credits(): Promise<boolean> {
+  try {
+    const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
+      params: {
+        id: this.props.user.user_id
+      }
+    });
+    
+    const credit: number = response.data;
+    return credit >= 20;
+  } catch (error) {
+    console.error("Error fetching user credits:", error);
+    return false;
+  }
+}
+
+async remove_credits() {
+  await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+    params: {
+       id: this.props.user.user_id,
+      changeAmount: -20
+    }
+  });
+  }
+
+  async add_credits(number : number, multiplier : number) {
+    await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+      params: {
+        id: this.props.user.user_id,
+        changeAmount: number * multiplier
+      }
+    });
   }
   
   

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Banner from '../components/banner';
 import CardGame from '../components/cardGames';
 import Navbar from '../components/Navbar';
+import Roulette from '../assets/roulette/dist/roulette';
 //import '../styles/style.scss'
 
 
@@ -16,7 +17,6 @@ export default function HomeView() {
         <CardGame gameName={"Roulette"} />
         <CardGame gameName={"Dice Game"} />
         <CardGame gameName={"Bingo"} />
-
       </main>
     </>)
   }

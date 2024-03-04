@@ -12,7 +12,7 @@ export default function HomeView() {
     <>
       <Navbar />
       <Banner />
-      <main>
+      <main id="frontMain">
         <CardGame gameName={"Roulette"} />
         <CardGame gameName={"Dice Game"} />
         <CardGame gameName={"Bingo"} />

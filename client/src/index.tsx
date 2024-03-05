@@ -9,6 +9,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
+import RouletteView from './views/RouletteView';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/games",
     element: <HomeView/>,
+  },
+  {
+    path: "/roulette",
+    element: <RouletteView/>,
   },
 ]);
 root.render(

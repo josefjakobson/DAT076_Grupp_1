@@ -2,13 +2,13 @@ import express, { Request, Response, Router } from "express";
 import { User } from "../model/user";
 import { UserService } from "../service/userService";
 
-const userService : UserService = new UserService();
+const userService: UserService = new UserService();
 
-export const userRouter : Router = express.Router();
+export const userRouter: Router = express.Router();
 
 userRouter.get("/user", async (
-    req : Request<{},{},{}>, 
-    res : Response<User[] | String>
+    req: Request<{}, {}, {}>,
+    res: Response<User[] | string>
 ) => {
     try {
         const users = await userService.getUsers();
@@ -18,12 +18,13 @@ userRouter.get("/user", async (
     }
 });
 
+
 userRouter.post("/user", async (
-    req : Request<{},{},{id : number}>, 
-    res : Response<Boolean>
+    req: Request<{}, {}, { id: number }>,
+    res: Response<boolean>
 ) => {
     try {
-        const success = await userService.addUser(req.query.id);
+        const success = await userService.addUser(req.body.id);
         res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -31,11 +32,12 @@ userRouter.post("/user", async (
 });
 
 userRouter.get("/credit", async (
-    req : Request<{},{},{id : number}>, 
-    res : Response<string | boolean>
+    req: Request<{ id: string }>,
+    res: Response<string | boolean>
 ) => {
     try {
-        const credits = await userService.getCredits(req.query.id);
+        const id = Number(req.query.id);
+        const credits = await userService.getCredits(id);
         console.log(credits);
         res.status(200).send(credits.toString());
     } catch (e: any) {
@@ -44,8 +46,8 @@ userRouter.get("/credit", async (
 });
 
 userRouter.put("/credit", async (
-    req : Request<{},{},{id : number, changeAmount : number}>, 
-    res : Response<Boolean>
+    req: Request<{}, {}, { id: number, changeAmount: number }>,
+    res: Response<boolean>
 ) => {
     try {
         const success = await userService.updateCredit(req.body.id, req.body.changeAmount);

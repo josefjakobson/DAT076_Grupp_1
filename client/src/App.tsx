@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import Banner from './components/banner';
-import Thenavbar from './components/navbar';
+import TheNavbar from './components/navbar';
 import CardGame from './components/cardGames';
 import './styles/style.scss'
 import HomeView from './views/HomeView';
@@ -28,6 +28,7 @@ function App() {
     );
   }
 
+  
   async function updateCredit() {
     setTimeout(async () => {
       try {

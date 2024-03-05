@@ -18,6 +18,7 @@ userRouter.get("/user", async (
     }
 });
 
+
 userRouter.post("/user", async (
     req: Request<{}, {}, { id: number }>,
     res: Response<boolean>

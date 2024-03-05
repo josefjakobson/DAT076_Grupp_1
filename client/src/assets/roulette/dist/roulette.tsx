@@ -20,7 +20,8 @@ class Roulette extends React.Component<RouletteProps> {
     const timer: number = 9000;
     const $red_bet: HTMLElement | null = document.querySelector('.red_bet');
     const $black_bet: HTMLElement | null = document.querySelector('.black_bet');
-    const $green_bet: HTMLElement | null = document.querySelector('.green_Bet');
+    const $green_bet: HTMLElement | null = document.querySelector('.green_bet');
+
     var active_bet_r: number = 0;
     var active_bet_b: number = 0;
     var active_bet_g: number = 0;
@@ -150,11 +151,11 @@ class Roulette extends React.Component<RouletteProps> {
         if ($red_bet) {
           $red_bet.textContent = "";
         }
-        if ($bet_b) {
-          $bet_b.textContent = "";
+        if ($black_bet) {
+          $black_bet.textContent = "";
         }
         if ($green_bet) {
-          $bet_g.textContent = "";
+          $green_bet.textContent = "";
         }
 
         active_bet_b = 0;
@@ -173,6 +174,9 @@ class Roulette extends React.Component<RouletteProps> {
             this.remove_credits();
             active_bet_r = active_bet_r + 20;
             $red_bet.textContent = active_bet_r.toString();
+            if (errorMessage) {
+              errorMessage.textContent = ""
+            }
           } else {
             if (errorMessage) {
               errorMessage.textContent = "You do not have enough credits."
@@ -188,6 +192,9 @@ class Roulette extends React.Component<RouletteProps> {
             this.remove_credits();
             active_bet_b = active_bet_b + 20;
             $black_bet.textContent = active_bet_b.toString();
+            if (errorMessage) {
+              errorMessage.textContent = ""
+            }
           } else {
             if (errorMessage) {
               errorMessage.textContent = "You do not have enough credits."
@@ -203,6 +210,9 @@ class Roulette extends React.Component<RouletteProps> {
             this.remove_credits();
             active_bet_g = active_bet_g + 20;
             $green_bet.textContent = active_bet_g.toString();
+            if (errorMessage) {
+              errorMessage.textContent = ""
+            }
           } else {
             if (errorMessage) {
               errorMessage.textContent = "You do not have enough credits."
@@ -247,16 +257,17 @@ class Roulette extends React.Component<RouletteProps> {
     try {
       await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
         id: this.props.user_id,
-        changeAmount: number * multiplier
+        changeAmount: (number * multiplier)
       });
     } catch (error) {
       console.error("Error adding credits:", error);
     }
   }
   
+  
   render() {
     return (
-      <div>
+      <div className="rouletteContainer">
         <meta charSet="UTF-8" />
         <title>CodePen - CSS Roulette Wheel</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" /><link rel="stylesheet" href="./style.css" />

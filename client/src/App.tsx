@@ -28,6 +28,7 @@ function App() {
     );
   }
 
+  
   async function updateCredit() {
     setTimeout(async () => {
       try {

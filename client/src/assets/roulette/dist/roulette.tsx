@@ -18,6 +18,9 @@ class Roulette extends React.Component<RouletteProps> {
     const $mask: HTMLElement | null = document.querySelector('.mask');
     const maskDefault: string = 'Place Your Bets';
     const timer: number = 9000;
+    const $red_bet: HTMLElement | null = document.querySelector('.red_bet');
+    const $black_bet: HTMLElement | null = document.querySelector('.black_bet');
+    const $green_bet: HTMLElement | null = document.querySelector('.green_Bet');
     var active_bet_r: number = 0;
     var active_bet_b: number = 0;
     var active_bet_g: number = 0;
@@ -143,19 +146,33 @@ class Roulette extends React.Component<RouletteProps> {
         $bet_r.disabled = false;
         $bet_b.disabled = false;
         $bet_g.disabled = false;
+
+        if ($red_bet) {
+          $red_bet.textContent = "";
+        }
+        if ($bet_b) {
+          $bet_b.textContent = "";
+        }
+        if ($green_bet) {
+          $bet_g.textContent = "";
+        }
+
+        active_bet_b = 0;
+        active_bet_r = 0;
+        active_bet_g =  0;
+        
       });
     }
 
     const errorMessage : HTMLElement | null = document.querySelector('.errorMessage');
 
     if ($bet_r) {
-      const red_bet: HTMLElement | null = document.querySelector('.red_bet');
       $bet_r.addEventListener('click', async () => {
-        if (red_bet) {
+        if ($red_bet) {
           if (await this.check_credits()) {
             this.remove_credits();
             active_bet_r = active_bet_r + 20;
-            red_bet.textContent = active_bet_r.toString();
+            $red_bet.textContent = active_bet_r.toString();
           } else {
             if (errorMessage) {
               errorMessage.textContent = "You do not have enough credits."
@@ -165,13 +182,12 @@ class Roulette extends React.Component<RouletteProps> {
       })
     }
     if ($bet_b) {
-      const black_bet: HTMLElement | null = document.querySelector('.black_bet');
       $bet_b.addEventListener('click', async () => {
-        if (black_bet) {
+        if ($black_bet) {
           if (await this.check_credits()) {
             this.remove_credits();
             active_bet_b = active_bet_b + 20;
-            black_bet.textContent = active_bet_b.toString();
+            $black_bet.textContent = active_bet_b.toString();
           } else {
             if (errorMessage) {
               errorMessage.textContent = "You do not have enough credits."
@@ -181,13 +197,12 @@ class Roulette extends React.Component<RouletteProps> {
       })
     }
     if ($bet_g) {
-      const green_bet: HTMLElement | null = document.querySelector('.green_bet');
       $bet_g.addEventListener('click', async () => {
-        if (green_bet) {
+        if ($green_bet) {
           if (await this.check_credits()) {
             this.remove_credits();
             active_bet_g = active_bet_g + 20;
-            green_bet.textContent = active_bet_g.toString();
+            $green_bet.textContent = active_bet_g.toString();
           } else {
             if (errorMessage) {
               errorMessage.textContent = "You do not have enough credits."
@@ -207,6 +222,7 @@ class Roulette extends React.Component<RouletteProps> {
         }
       });
       const credit: number = response.data;
+      console.log(credit);
       return credit >= 20;
     } catch (error) {
       console.error("Error fetching user credits:", error);

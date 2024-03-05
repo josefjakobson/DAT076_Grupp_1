@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../components/banner';
 import CardGame from '../components/cardGames';
-import TheNavbar from '../components/Navbar';
+import TheNavbar from '../components/navbar';
 import LoginForm from '../components/loginForm';
 import SignupForm from '../components/signup';
 //import '../styles/style.scss'

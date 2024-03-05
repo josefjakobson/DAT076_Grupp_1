@@ -35,7 +35,7 @@ userRouter.get("/credit", async (
     res: Response<string | boolean>
 ) => {
     try {
-        const id = Number(req.query.id); // Parse the id as a number
+        const id = Number(req.query.id);
         const credits = await userService.getCredits(id);
         console.log(credits);
         res.status(200).send(credits.toString());

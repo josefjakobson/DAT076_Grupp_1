@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import Banner from './components/banner';
-import TheNavbar from './components/Navbar';
+import TheNavbar from './components/navbar';
 import CardGame from './components/cardGames';
 import './styles/style.scss'
 import HomeView from './views/HomeView';

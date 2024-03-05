@@ -51,11 +51,14 @@ export class UserService {
     }
 
     async removeCredit(user: User|undefined, removeAmount: number): Promise<boolean> {
+        console.log(user?.amount);
         if (user) {
             if (user.amount + removeAmount < 0) {
+                console.log(user?.amount);
                 return false;
             } else {
                 user.amount += removeAmount;
+                console.log(user?.amount);
                 return true;
             } 
         }

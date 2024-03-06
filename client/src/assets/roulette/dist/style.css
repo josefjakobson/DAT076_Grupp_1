@@ -409,36 +409,120 @@ body {
   left: 25%;
 }
 .rouletteContainer .btn {
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
   background: green;
-  border: 1px solid #000000;
-  border-top-color: #00b300;
-  border-left-color: #00b300;
   padding: 0;
   margin: 0;
   display: inline-block;
   font-size: 15px;
   width: 175px;
-  padding: 12px;
   margin: 12px;
   cursor: pointer;
   color: #fff;
   font-family: 'Roboto', sans-serif;
   border-radius: 3px;
 }
+.rouletteContainer .btn:active {
+  background: darkgreen;
+  transform: translateY(2px); 
+}
 .rouletteContainer .btn .btn-label {
   padding: 12px;
   white-space: nowrap;
 }
 .rouletteContainer .btn.btn-reset {
-  background: darkgreen;
-  border: 1px solid #000000;
-  border-top-color: #009700;
-  border-left-color: #009700;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  background: green;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  font-size: 15px;
+  width: 175px;
+  margin: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 3px;
 }
 .rouletteContainer .btn.disabled {
-  opacity: 0.2;
+  opacity: 0.4;
   transition: opacity 0.24s linear;
   cursor: not-allowed;
+}
+.rouletteContainer .bet-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  margin: 0 5px;
+}
+
+.btn-label {
+  text-align: center;
+}
+
+.bet-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  margin: 0 5px; /* Adjust margin as needed */
+}
+
+.btn-label {
+  text-align: center;
+  display: inline-block; /* Ensures text alignment */
+}
+
+.rounded-container {
+  border-radius: 10px;
+  background-color: rgb(89, 5, 5);
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.color-container {
+  width: 100px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+.black-container {
+  background-color: black;
+}
+
+.red-container {
+  background-color: red;
+}
+
+.green-container {
+  background-color: green;
+}
+.infoMessage {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+.red_bet {
+  color: white;
+}
+.black_bet {
+  color: white;
+}
+.green_bet {
+  color: white;
 }
 @-webkit-keyframes rotate {
   0% {

@@ -27,6 +27,16 @@ class Roulette extends React.Component<RouletteProps> {
     var active_bet_g: number = 0;
   
     const red: number[] = [32,19,21,25,34,27,36,30,23,5,16,1,14,9,18,7,12,3];
+
+    if ($red_bet) {
+      $red_bet.textContent = "0";
+    }
+    if ($black_bet) {
+      $black_bet.textContent = "0";
+    }
+    if ($green_bet) {
+      $green_bet.textContent = "0";
+    }
   
     if ($reset) {
       $reset.style.display = 'none';
@@ -149,13 +159,13 @@ class Roulette extends React.Component<RouletteProps> {
         $bet_g.disabled = false;
 
         if ($red_bet) {
-          $red_bet.textContent = "";
+          $red_bet.textContent = "0";
         }
         if ($black_bet) {
-          $black_bet.textContent = "";
+          $black_bet.textContent = "0";
         }
         if ($green_bet) {
-          $green_bet.textContent = "";
+          $green_bet.textContent = "0";
         }
 
         active_bet_b = 0;
@@ -327,25 +337,20 @@ class Roulette extends React.Component<RouletteProps> {
             </div>
           </div>
           <div className="bet-buttons-container">
-            <button type="button" className="btn" id="bet_r">
-              <span className="btn-label">Bet 20 credits on red</span>
-            </button>
-            <button type="button" className="btn" id="bet_b">
-              <span className="btn-label">Bet 20 credits on black</span>
-            </button>
-            <button type="button" className="btn" id="bet_g">
-              <span className="btn-label">Bet 20 credits on green</span>
-            </button>
+            <button type="button" className="btn" id="bet_r"><center><span className="btn-label">Bet 20 credits on red</span></center></button>
+            <button type="button" className="btn" id="bet_b"><center><span className="btn-label">Bet 20 credits on black</span></center></button>
+            <button type="button" className="btn" id="bet_g"><center><span className="btn-label">Bet 20 credits on green</span></center></button>
           </div>
-          <div className="errorMessage"></div>
-          <center>
-            <div className="errorMessage"></div>
-          </center>
-          <center>
-            <div className="red_bet"></div>
-            <div className="black_bet"></div>
-            <div className="green_bet"></div>
-          </center>
+          <div className="rounded-container">
+            <center>
+              <div className="errorMessage"></div>
+            </center>
+          </div>
+          <div className="rounded-container">
+          <div className="color-container red-container"><center><div className="red_bet"></div></center></div>
+            <div className="color-container black-container"><center><div className="black_bet"></div></center></div>
+            <div className="color-container green-container"><center><div className="green_bet"></div></center></div>
+          </div>
         </div>
       </div>
     );

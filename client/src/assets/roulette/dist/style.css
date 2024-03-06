@@ -440,6 +440,72 @@ body {
   transition: opacity 0.24s linear;
   cursor: not-allowed;
 }
+.rouletteContainer .bet-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  margin: 0 5px;
+}
+
+.btn-label {
+  text-align: center;
+}
+
+.bet-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  margin: 0 5px; /* Adjust margin as needed */
+}
+
+.btn-label {
+  text-align: center;
+  display: inline-block; /* Ensures text alignment */
+}
+
+.rounded-container {
+  border-radius: 10px;
+  background-color: rgb(89, 5, 5);
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.color-container {
+  width: 100px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+.black-container {
+  background-color: black;
+}
+
+.red-container {
+  background-color: red;
+}
+
+.green-container {
+  background-color: green;
+}
+.errorMessage {
+  color: white;
+}
+.red_bet {
+  color: white;
+}
+.black_bet {
+  color: white;
+}
+.green_bet {
+  color: white;
+}
 @-webkit-keyframes rotate {
   0% {
     transform: rotateZ(0deg);

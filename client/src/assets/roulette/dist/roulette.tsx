@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import axios from "axios";
+import { stringify } from "querystring";
 
 interface RouletteProps {
   user_id: number;
@@ -21,12 +22,17 @@ class Roulette extends React.Component<RouletteProps> {
     const $red_bet: HTMLElement | null = document.querySelector('.red_bet');
     const $black_bet: HTMLElement | null = document.querySelector('.black_bet');
     const $green_bet: HTMLElement | null = document.querySelector('.green_bet');
+    const infoMessage : HTMLElement | null = document.querySelector('.infoMessage');
 
     var active_bet_r: number = 0;
     var active_bet_b: number = 0;
     var active_bet_g: number = 0;
   
     const red: number[] = [32,19,21,25,34,27,36,30,23,5,16,1,14,9,18,7,12,3];
+
+    if (infoMessage) {
+      infoMessage.textContent = "It's gaming time 😎"
+    }
 
     if ($red_bet) {
       $red_bet.textContent = "0";
@@ -125,10 +131,22 @@ class Roulette extends React.Component<RouletteProps> {
           }
           if (active_bet_r && color === 'red') {
             this.add_credits(active_bet_r, 2);
+            if (infoMessage) {
+              var temp: number = active_bet_r * 2;
+              infoMessage.textContent = temp.toString();
+            }
           } else if (active_bet_b && color === 'black') {
             this.add_credits(active_bet_b, 2);
+            if (infoMessage) {
+              var temp: number = active_bet_b * 2;
+              infoMessage.textContent = temp.toString();
+            }
           } else if (active_bet_g && color === 'green') {
             this.add_credits(active_bet_g, 35)
+            if (infoMessage) {
+              var temp: number = active_bet_g * 35;
+              infoMessage.textContent = temp.toString();
+            }
           }
           active_bet_r = 0;
           active_bet_b = 0;
@@ -175,8 +193,6 @@ class Roulette extends React.Component<RouletteProps> {
       });
     }
 
-    const errorMessage : HTMLElement | null = document.querySelector('.errorMessage');
-
     if ($bet_r) {
       $bet_r.addEventListener('click', async () => {
         if ($red_bet) {
@@ -184,12 +200,12 @@ class Roulette extends React.Component<RouletteProps> {
             this.remove_credits();
             active_bet_r = active_bet_r + 20;
             $red_bet.textContent = active_bet_r.toString();
-            if (errorMessage) {
-              errorMessage.textContent = ""
+            if (infoMessage) {
+              infoMessage.textContent = "Bet placed."
             }
           } else {
-            if (errorMessage) {
-              errorMessage.textContent = "You do not have enough credits."
+            if (infoMessage) {
+              infoMessage.textContent = "You do not have enough credits."
             }
           }
         }
@@ -202,12 +218,12 @@ class Roulette extends React.Component<RouletteProps> {
             this.remove_credits();
             active_bet_b = active_bet_b + 20;
             $black_bet.textContent = active_bet_b.toString();
-            if (errorMessage) {
-              errorMessage.textContent = ""
+            if (infoMessage) {
+              infoMessage.textContent = "Bet placed."
             }
           } else {
-            if (errorMessage) {
-              errorMessage.textContent = "You do not have enough credits."
+            if (infoMessage) {
+              infoMessage.textContent = "You do not have enough credits."
             }
           }
         }
@@ -220,12 +236,12 @@ class Roulette extends React.Component<RouletteProps> {
             this.remove_credits();
             active_bet_g = active_bet_g + 20;
             $green_bet.textContent = active_bet_g.toString();
-            if (errorMessage) {
-              errorMessage.textContent = ""
+            if (infoMessage) {
+              infoMessage.textContent = "Bet placed."
             }
           } else {
-            if (errorMessage) {
-              errorMessage.textContent = "You do not have enough credits."
+            if (infoMessage) {
+              infoMessage.textContent = "You do not have enough credits."
             }
           }
         }
@@ -263,7 +279,6 @@ class Roulette extends React.Component<RouletteProps> {
   }
 
   async add_credits(number: number, multiplier: number) {
-    console.log(this.props.user_id);
     try {
       await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
         id: this.props.user_id,
@@ -343,7 +358,7 @@ class Roulette extends React.Component<RouletteProps> {
           </div>
           <div className="rounded-container">
             <center>
-              <div className="errorMessage"></div>
+              <div className="infoMessage"></div>
             </center>
           </div>
           <div className="rounded-container">

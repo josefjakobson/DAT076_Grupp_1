@@ -426,6 +426,10 @@ body {
   font-family: 'Roboto', sans-serif;
   border-radius: 3px;
 }
+.rouletteContainer .btn:active {
+  background: darkgreen;
+  transform: translateY(2px); 
+}
 .rouletteContainer .btn .btn-label {
   padding: 12px;
   white-space: nowrap;

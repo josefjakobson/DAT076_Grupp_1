@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef, FormEvent } from 'react';
+import React, { useRef, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export interface User {
@@ -8,6 +8,9 @@ export interface User {
 }
 
 export default function LoginForm() {
+
+  const [errorSignIn, seterrorSignIn] = useState(false);
+
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -34,9 +37,9 @@ export default function LoginForm() {
         if (users[i].user_id == parseInt(username)) {
           console.log("navigate to games")
           navigate('/games');
-
         }
       }
+      seterrorSignIn(true)
     } catch (error: any) {
       console.log(error);
     }
@@ -44,8 +47,10 @@ export default function LoginForm() {
 
   return (
     <div>
-      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
+      {errorSignIn && <p className='errorMsgLogIn'>Incorrect username or password.</p>}
+
+        
         <div>
           <input
             type="text"

@@ -3,8 +3,10 @@ import React, { useRef, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export interface User {
-  user_id: number;
-  amount: number;
+  user_id : number;
+  username : string;
+  password : string;
+  amount : number;
 }
 
 export default function LoginForm() {
@@ -34,8 +36,7 @@ export default function LoginForm() {
       const users = response.data;
       console.log(users)
       for (let i = 0; i < users.length; i++) {
-        if (users[i].user_id == parseInt(username)) {
-          console.log("navigate to games")
+        if (users[i].username == username && users[i].password == password) {
           navigate('/games');
         }
       }
@@ -48,9 +49,7 @@ export default function LoginForm() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-      {errorSignIn && <p className='errorMsgLogIn'>Incorrect username or password.</p>}
-
-        
+      {errorSignIn && <p className='errorMsgLogIn'>Incorrect username or password.</p>}        
         <div>
           <input
             type="text"

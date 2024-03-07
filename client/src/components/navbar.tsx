@@ -21,6 +21,7 @@ export default function TheNavbar({ open }: { open: () => void } ) {
           <Nav className="me-auto">
             <Nav.Link href="/games">Home</Nav.Link>
             <Nav.Link href="#link">About</Nav.Link>
+            <Nav.Link href="/Scoreboard">ScoreBoard</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Button variant="outline-dark" onClick={open}>Credits</Button>

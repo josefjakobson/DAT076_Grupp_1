@@ -4,8 +4,10 @@ import React, { useRef, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export interface User {
-  user_id: number;
-  amount: number;
+  user_id : number;
+  username : string;
+  password : string;
+  amount : number;
 }
 
 export default function SignupForm() {
@@ -45,7 +47,8 @@ export default function SignupForm() {
     if (passwordRef2.current) passwordRef2.current.value = '';
 
     if (password2 == password1) {
-      SignUpUser(5, password1)
+      SignUpUser(username, password1)
+
     }
     else {
       setPasswordsMatch(false)
@@ -55,14 +58,15 @@ export default function SignupForm() {
    
   };
 
-  async function SignUpUser(username: number, password: string) {
+  async function SignUpUser(inUsername: string, inPassword: string) {
     try {
         const response = await axios.post<User>("http://localhost:8080/userRouter/user", {
-            id: username
+            username: inUsername,
+            password: inPassword,
         });
         const users = response.data;
-        console.log(response.data)
-        if (response.data.user_id == undefined)
+
+        if (response.status != 200)
         {
           setUsernameNotUniqe(true);
         }

@@ -2,23 +2,25 @@
 import { User } from "../model/user";
 
 export class UserService {
-    private users: User[] = [{user_id: 1, amount: 45}];
+    private users: User[] = [{user_id: 1, username: "a1", password:"23", amount: 45}];
 
     async getUsers(): Promise<User[]>{
         return this.users;
     }
-    async checkUserAvailability(id: number): Promise<boolean> {
-        const temp = this.users.find((user) => user.user_id == id);
+    async checkUserAvailability(username: string): Promise<boolean> {
+        const temp = this.users.find((user) => user.username == username);
         return (temp == undefined);
     }
 
-    async addUser(id: number): Promise<boolean> {
+    async addUser(id: number, inUsername : string, inPassword: string): Promise<boolean> {
         console.log(this.users)
         console.log(id)
 
-        if ( await this.checkUserAvailability(id)) {
+        if ( await this.checkUserAvailability(inUsername)) {
             const user = {
                 user_id: id,
+                username: inUsername,
+                password: inPassword,
                 amount : 0,
             }
             this.users.push(user)
@@ -29,10 +31,8 @@ export class UserService {
 
     
     async getCredits(id: number | undefined): Promise<number | boolean> {
-        console.log(this.users)
-        console.log(id)
         if (id === undefined) {
-            console.error("ID is undefined");
+            console.error("usernaem is undefined");
             return false;
         }
         const user = this.users.find((user) => user.user_id === id);

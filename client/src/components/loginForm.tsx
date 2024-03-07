@@ -1,43 +1,45 @@
 import axios from 'axios';
-import React, { useRef, FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export interface User {
-  user_id : number;
-  amount : number;
+  user_id: number;
+  amount: number;
 }
 
 export default function LoginForm() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-
+  const navigate = useNavigate();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const username = usernameRef.current?.value || '';
     const password = passwordRef.current?.value || '';
-    LoginUser(username, password)
     console.log('Username:', username);
     console.log('Password:', password);
 
     if (usernameRef.current) usernameRef.current.value = '';
     if (passwordRef.current) passwordRef.current.value = '';
+
+    LoginUser(username, password)
   };
 
-  async function LoginUser(username : string, password : string) {
-    setTimeout(async () => {
-      try {
-        const response = await axios.get<User[]>("http://localhost:8080/userRouter/user");  
-        const users = response.data;
-        for (let i = 0; i < users.length; i++) {
-          if (users[i].user_id == parseInt(username)) {
-              console.log("navigate to games")
-          }
+  async function LoginUser(username: string, password: string) {
+    try {
+      const response = await axios.get<User[]>("http://localhost:8080/userRouter/user");  
+      const users = response.data;
+      console.log(users)
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].user_id == parseInt(username)) {
+          console.log("navigate to games")
+          navigate('/games');
+
         }
-      } catch (error: any) {
-        console.log(error);
       }
-    });
+    } catch (error: any) {
+      console.log(error);
+    }
   }
 
   return (
@@ -58,7 +60,9 @@ export default function LoginForm() {
             ref={passwordRef} 
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">
+          Login
+        </button>
       </form>
     </div>
   );

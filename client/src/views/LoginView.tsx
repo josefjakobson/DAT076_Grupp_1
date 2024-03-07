@@ -19,7 +19,6 @@ export default function LoginView() {
         <LoginForm />
         <div className='devider'></div>
         <SignupForm/>
-
         </main>
    
     </>)

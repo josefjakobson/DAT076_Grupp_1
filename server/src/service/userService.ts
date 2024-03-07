@@ -13,6 +13,9 @@ export class UserService {
     }
 
     async addUser(id: number): Promise<boolean> {
+        console.log(this.users)
+        console.log(id)
+
         if ( await this.checkUserAvailability(id)) {
             const user = {
                 user_id: id,

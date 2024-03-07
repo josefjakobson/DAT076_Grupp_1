@@ -7,12 +7,10 @@ class userDBService implements IUserService{
     async getUsers(): Promise<User[]> {
         return await userModel.find();
     }
-    async checkUserAvailability(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
-    async addUser(id: number): Promise<boolean> {
+    
+    async addUser(id: number, inUsername: string, inPassword: string): Promise<boolean> {
         try{
-            await userModel.create({user_id: id, amount: 0});
+            await userModel.create({user_id: id, username: inUsername, password: inPassword, amount: 0});
             return true;
         } catch (e: any) {
             return false;
@@ -27,29 +25,25 @@ class userDBService implements IUserService{
         }
     }
     async updateCredit(id: number, changeAmount: number): Promise<boolean> {
-        if (changeAmount > 0){
-            try{
+        try{
+            if (changeAmount > 0){
                 const user = userModel.findOneAndUpdate(
                     { id: id },
                     { $inc: { credits: changeAmount } },
                     { new: true } // Return the updated document
                 );
                 return true;
-            } catch (e: any) {
-                return false;
-            }      
-        } else {
-            try {
+            } else {
                 const user = await userModel.findOneAndUpdate(
                     { id: id, credits: { $gte: changeAmount } }, // Ensure enough credits are available
                     { $inc: { credits: changeAmount } },
                     { new: true } // Return the updated document
                 );
                 return true;
-            } catch (e: any) {
-                return false;
             }
-        
+    
+        } catch(e: any){
+            return false;
         }
     }    
 }

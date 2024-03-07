@@ -1,7 +1,8 @@
 //import { ConsoleMessage } from "puppeteer";
 import { User } from "../model/user";
+import { IUserService } from "./IUserService";
 
-export class UserService {
+export class UserService implements IUserService {
     private users: User[] = [{user_id: 1, amount: 45}];
 
     async getUsers(): Promise<User[]>{
@@ -43,40 +44,13 @@ export class UserService {
         return user.amount;
     }
     
-
-    async addCredit(user: User|undefined, addAmount: number): Promise<boolean> {
-        if (user) {
-            user.amount += addAmount;
-            console.log(user);
-            return true; 
-        }
-        return false;
-    }
-
-    async removeCredit(user: User|undefined, removeAmount: number): Promise<boolean> {
-        console.log(user?.amount);
-        if (user) {
-            if (user.amount + removeAmount < 0) {
-                console.log(user?.amount);
-                return false;
-            } else {
-                user.amount += removeAmount;
-                console.log(user?.amount);
-                return true;
-            } 
-        }
-        return false;
-    }
-
     async updateCredit(id: number, changeAmount: number): Promise<boolean>{
         const temp = this.users.find((user) => user.user_id === id);
-        if(changeAmount<0){
-            const success = await this.removeCredit(temp, changeAmount);
-            return success;
-        }
-        else{
-            const success = await this.addCredit(temp, changeAmount);
-            return success;
-        }
+        if(temp){
+            if(changeAmount<0 && changeAmount > temp.amount) return false
+            temp.amount += changeAmount;
+            return true;
+        } else return false;
+
     }
 }

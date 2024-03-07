@@ -1,8 +1,9 @@
 import express, { Request, Response, Router } from "express";
 import { User } from "../model/user";
 import { UserService } from "../service/userService";
+import { IUserService } from "../service/IUserService";
 
-const userService: UserService = new UserService();
+const userService: IUserService = new UserService();
 
 export const userRouter: Router = express.Router();
 

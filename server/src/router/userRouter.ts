@@ -21,11 +21,13 @@ userRouter.get("/user", async (
 
 
 userRouter.post("/user", async (
-    req: Request<{}, {}, { id: number }>,
+    req: Request<{}, {}, {username: string, password: string }>,
     res: Response<boolean>
 ) => {
     try {
-        const success = await userService.addUser(req.body.id);
+        const users = await userService.getUsers();
+        let id = users.length + 1;
+        const success = await userService.addUser(id, req.body.username, req.body.password);
         res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);

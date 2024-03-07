@@ -11,16 +11,47 @@ import  '../styles/frontpage.scss'
 
 
 export default function LoginView() {
+    const [visibility, setVisibility] = useState(true);
+    // function switchVisability(setVisible : string) {
+    //     if (setVisible == "Login") 
+    //     {
+    //         visability = true;
+    //     }
+    //     else if (setVisible == "SignUp") {
+    //         visability = false;
+    //     }
+    //     console.log(visability)
+    // }
+
     return (
-
     <>
-        <Banner/>
-        <main id='loginMain'>
-        <LoginForm />
-        <div className='devider'></div>
-        <SignupForm/>
+        <div id='frontpage'>
+            <Banner/>
+            <main id='loginMain'>
+                <div>
+                {visibility ? (
+                        <>
+                            <button className='frontpageToggle' onClick={() => setVisibility(true)}>Login</button>
+                            <button className='frontpageToggle' id='lighter' onClick={() => setVisibility(false)}>SignUp</button>
+                        </>
+                    ) : (
+                        <>
+                        <button className='frontpageToggle' id='lighter' onClick={() => setVisibility(true)}>Login</button>
+                        <button className='frontpageToggle'  onClick={() => setVisibility(false)}>SignUp</button>
+                    </>
+                    )}
 
-        </main>
-   
+                </div>
+                {visibility ? (
+                        <LoginForm />
+                    ) : (
+                        <SignupForm />
+                    )}
+            </main>
+        </div>
+
     </>)
+
+    
   }
+

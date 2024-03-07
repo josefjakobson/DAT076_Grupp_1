@@ -1,0 +1,4 @@
+The source code for this is not made by us but is modified for use with the webb application to test it's features.
+It has been heavily modified and converted from js and html into a react component using typescript as well as integrated with our
+API.
+Original soruce is: https://codepen.io/pder/pen/WYrRQm

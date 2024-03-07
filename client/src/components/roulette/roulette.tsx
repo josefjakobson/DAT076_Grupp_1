@@ -1,7 +1,6 @@
 import React from "react";
-import "./style.css";
+import '../../styles/roulettestyle.scss';
 import axios from "axios";
-import { stringify } from "querystring";
 
 interface RouletteProps {
   user_id: number;
@@ -292,7 +291,7 @@ class Roulette extends React.Component<RouletteProps> {
   
   render() {
     return (
-      <div className="rouletteContainer">
+      <body className="rouletteContainer">
         <meta charSet="UTF-8" />
         <title>CodePen - CSS Roulette Wheel</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" /><link rel="stylesheet" href="./style.css" />
@@ -367,7 +366,7 @@ class Roulette extends React.Component<RouletteProps> {
             <div className="color-container green-container"><center><div className="green_bet"></div></center></div>
           </div>
         </div>
-      </div>
+      </body>
     );
   }
 }

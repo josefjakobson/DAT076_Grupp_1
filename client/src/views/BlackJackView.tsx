@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../components/banner';
-import CardGame from '../components/cardGames';
 import Thenavbar from '../components/navbar';
 import useModal from '../hooks/useModal';
 import Modal from '../components/creditModal';
-import Roulette from '../components/roulette/roulette';
+import BlackJack from '../components/blackJack/blackjack';
 import '../styles/style.scss'
 
 
-export default function RouletteView() {
+export default function BlackJackView() {
   const {isOpen, toggle} = useModal();
 
   return (
@@ -19,7 +18,7 @@ export default function RouletteView() {
       <Banner />
       <main id="frontMain">
         <div>
-          <Roulette user_id={1}/>
+          <BlackJack></BlackJack>
         </div>
       </main>
     </>)

@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
 import RouletteView from './views/RouletteView';
+import BlackJackView from './views/BlackJackView';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -28,12 +29,17 @@ const router = createBrowserRouter([
     path: "/roulette",
     element: <RouletteView/>,
   },
+  {
+    path: "/blackjack",
+    element: <BlackJackView/>,
+  },
 ]);
 root.render(
   //<React.StrictMode>
     <RouterProvider router={router} />
   //</React.StrictMode>
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

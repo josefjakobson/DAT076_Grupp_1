@@ -1,0 +1,189 @@
+.blackjackcontainer * {
+  box-sizing: border-box;
+}
+
+.blackjackcontainer .clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.blackjackcontainer .clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+.blackjackcontainer * html .clearfix { height: 1%; }
+.blackjackcontainer .clearfix { display: block; }
+/* close commented backslash hack */
+
+.blackjackcontainer html {
+  font-size: 8px;
+}
+
+.blackjackcontainer {
+  padding: 10rem;
+  width: 100vw;
+  height: 100%;
+  background: radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 9%, hsla(0, 100%, 20%, 0) 9%) 0 0, radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 8%, hsla(0, 100%, 20%, 0) 10%) 50px 50px, radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 50px 0, radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 0 50px, radial-gradient(hsl(0, 100%, 20%) 35%, hsla(0, 100%, 20%, 0) 60%) 50px 0, radial-gradient(hsl(0, 100%, 20%) 35%, hsla(0, 100%, 20%, 0) 60%) 100px 50px, radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 0 0, radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 50px 50px, linear-gradient(45deg, hsla(0, 100%, 20%, 0) 49%, hsl(0, 0%, 0%) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0, linear-gradient(-45deg, hsla(0, 100%, 20%, 0) 49%, hsl(0, 0%, 0%) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0;
+  background-color: #300;
+  background-size: 100px 100px;
+  overflow: auto;
+  color: #f7f7f7;
+  user-select: none;
+}
+
+.blackjackcontainer .container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.blackjackcontainer .buttons {
+  width: 100%;
+  height: 5rem;
+}
+
+.blackjackcontainer .button {
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  background: green;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  font-size: 15px;
+  width: 175px;
+  margin: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 3px;
+}
+
+.blackjackcontainer .fullbar {
+  width: 100%;
+}
+
+.blackjackcontainer #reset,
+.blackjackcontainer #startover{
+  width: 100%;
+}
+
+.blackjackcontainer .button.last {
+  margin-right: 0;
+}
+
+.blackjackcontainer .button:hover {
+  background: #373737;
+  color: #f7f7f7;
+  border: 2px solid #f7f7f7;
+  cursor: pointer;
+}
+
+.blackjackcontainer .button.lil {
+  padding: 5%;
+}
+
+.blackjackcontainer .button.big {
+  padding: 5%;
+}
+
+.blackjackcontainer .changeBet {
+  margin-bottom: .5rem;
+}
+
+.blackjackcontainer .computer-value {
+  text-align: right;
+  font-size: 2.5rem;
+}
+
+.blackjackcontainer .player-value {
+  text-align: left;
+  font-size: 2.5rem;
+}
+
+.blackjackcontainer .title {
+  font-size: 3rem;
+  margin-bottom: .5rem;
+}
+
+.blackjackcontainer .title div {
+  float: left;
+  width: 50%;
+}
+
+.blackjackcontainer .result {
+  text-align: center;
+  font-size: 5rem;
+}
+
+.blackjackcontainer .hide {
+  display: none;
+}
+
+.blackjackcontainer #cash {
+  float: left;
+  text-align: left;
+  width: 50%;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.blackjackcontainer #bet {
+  float: left;
+  text-align: right;
+  width: 50%;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.blackjackcontainer .card-section {
+  float: left;
+  width: 50%;
+  height: 10rem;
+}
+
+.blackjackcontainer .single-left {
+  background: #f7f7f7;
+  color: #373737;
+  float: left;
+  width: 6.5rem;
+  height: 10rem;
+  border: 2px solid #373737;
+  border-radius: .5rem;
+  margin-left: -4.5rem;
+  padding: .35rem;
+}
+
+.blackjackcontainer .facevalue {
+  font-size: 1.35rem;
+}
+
+.blackjackcontainer .first {
+  margin-left: 0;
+  margin-left: 0;
+}
+
+.blackjackcontainer .red {
+  color: #e75757;
+}
+
+@media screen and (min-width: 401px) {
+  .blackjackcontainer html {
+      font-size: 10px;
+  }
+}
+
+@media screen and (min-width: 590px) {
+  .blackjackcontainer html {
+      font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 774px) {
+  .blackjackcontainer html {
+      font-size: 16px;
+  }
+}

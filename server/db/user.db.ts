@@ -6,9 +6,9 @@ import { conn } from "./conn";
 
 
 
-const userSchema : Schema = new Schema({
+const userSchema : Schema = new Schema<User>({
 
-    id : {
+    user_id : {
         type : Number,
         required : true,
         unique: true

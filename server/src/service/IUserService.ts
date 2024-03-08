@@ -9,7 +9,7 @@ export interface IUserService{
     // Tries to add a user with id
     // Returns true if user was added
     // Returns false if id was already in use and user was not added
-    addUser(id: number, inUsername : string, inPassword: string):Promise<boolean>
+    addUser(id: number, inUsername : string, inPassword: string, credits: number):Promise<boolean>
     
 
     // Gets credits of some user, returns false if user not found

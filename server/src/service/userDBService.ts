@@ -3,23 +3,25 @@ import { IUserService } from "./IUserService";
 import {userModel} from "../../db/user.db";
 
 
-class userDBService implements IUserService{
+export class userDBService implements IUserService{
     async getUsers(): Promise<User[]> {
         return await userModel.find();
     }
-    
-    async addUser(id: number, inUsername: string, inPassword: string): Promise<boolean> {
+
+    async addUser(id: number, inUsername: string, inPassword: string, credits: number = 0): Promise<boolean> {
         try{
-            await userModel.create({user_id: id, username: inUsername, password: inPassword, amount: 0});
+            await userModel.create({user_id: id, username: inUsername, password: inPassword, credits});
             return true;
         } catch (e: any) {
+            //console.log(e)
             return false;
         }
     }
     async getCredits(id: number | undefined): Promise<number | boolean> {
         try{
-            const query = await userModel.find().$where('this.id = id');
-            return Number(query);
+            const query = await userModel.find({user_id:id}, {_id:0, credits:1});
+            const value = query.pop()?.credits;
+            if(value) return value; else return false;
         } catch (e: any){
             return false;
         }
@@ -28,21 +30,23 @@ class userDBService implements IUserService{
         try{
             if (changeAmount > 0){
                 const user = userModel.findOneAndUpdate(
-                    { id: id },
+                    { user_id: id },
                     { $inc: { credits: changeAmount } },
                     { new: true } // Return the updated document
                 );
+                console.log(user)
                 return true;
             } else {
-                const user = await userModel.findOneAndUpdate(
-                    { id: id, credits: { $gte: changeAmount } }, // Ensure enough credits are available
-                    { $inc: { credits: changeAmount } },
-                    { new: true } // Return the updated document
+                const user = await userModel.updateOne(
+                    { user_id: id, credits: { $gte: changeAmount } }, // Ensure enough credits are available
+                    { $inc: { 'credits': changeAmount } },
+                    {new: true}
                 );
                 return true;
             }
     
         } catch(e: any){
+            console.log(e);
             return false;
         }
     }    

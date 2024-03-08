@@ -29,9 +29,9 @@ export class userDBService implements IUserService{
     async updateCredit(id: number, changeAmount: number): Promise<boolean> {
         try{
             if (changeAmount > 0){
-                const user = userModel.findOneAndUpdate(
+                const user = await userModel.updateOne(
                     { user_id: id },
-                    { $inc: { credits: changeAmount } },
+                    { $inc: { 'credits': changeAmount } },
                     { new: true } // Return the updated document
                 );
                 console.log(user)

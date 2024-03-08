@@ -2,8 +2,9 @@ import express, { Request, Response, Router } from "express";
 import { User } from "../model/user";
 import { UserService } from "../service/userService";
 import { IUserService } from "../service/IUserService";
+import { userDBService } from "../service/userDBService";
 
-const userService: IUserService = new UserService();
+const userService: IUserService = new userDBService();
 
 export const userRouter: Router = express.Router();
 
@@ -27,7 +28,7 @@ userRouter.post("/user", async (
     try {
         const users = await userService.getUsers();
         let id = users.length + 1;
-        const success = await userService.addUser(id, req.body.username, req.body.password);
+        const success = await userService.addUser(id, req.body.username, req.body.password, 0);
         res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);

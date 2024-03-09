@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from "express";
 import { User } from "../model/user";
-import { UserService } from "../service/userService";
 import { IUserService } from "../service/IUserService";
 import { userDBService } from "../service/userDBService";
 
@@ -8,9 +7,9 @@ const userService: IUserService = new userDBService();
 
 export const userRouter: Router = express.Router();
 
-userRouter.get("/user", async (
-    req: Request<{}, {}, {}>,
-    res: Response<User[] | string>
+userRouter.get("/users", async (
+    req: Request<{}, {}, {username: string}>,
+    res: Response<User[]>
 ) => {
     try {
         const users = await userService.getUsers();
@@ -20,9 +19,20 @@ userRouter.get("/user", async (
     }
 });
 
+userRouter.get("/user", async (
+    req: Request<{}, {}, {username: string}>,
+    res: Response<User | null>
+) => {
+    try {
+        const user = await userService.getUser(req.body.username);
+        res.status(200).send(user);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
 
 userRouter.post("/user", async (
-    req: Request<{}, {}, {username: string, password: string }>,
+    req: Request<{}, {}, {username: string, password: string}>,
     res: Response<boolean>
 ) => {
     try {
@@ -36,13 +46,11 @@ userRouter.post("/user", async (
 });
 
 userRouter.get("/credit", async (
-    req: Request<{ id: string }>,
+    req: Request<{ username: string }>,
     res: Response<string | boolean>
 ) => {
     try {
-        const id = Number(req.query.id);
-        const credits = await userService.getCredits(id);
-        console.log(credits);
+        const credits = await userService.getCredits(req.body.username);
         res.status(200).send(credits.toString());
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -50,11 +58,11 @@ userRouter.get("/credit", async (
 });
 
 userRouter.put("/credit", async (
-    req: Request<{}, {}, { id: number, changeAmount: number }>,
+    req: Request<{}, {}, { username: string, changeAmount: number }>,
     res: Response<boolean>
 ) => {
     try {
-        const success = await userService.updateCredit(req.body.id, req.body.changeAmount);
+        const success = await userService.updateCredit(req.body.username, req.body.changeAmount);
         res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);

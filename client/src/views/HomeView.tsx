@@ -20,6 +20,7 @@ export default function HomeView() {
         <CardGame gameName={"Roulette"} />
         <CardGame gameName={"Dice Game"} />
         <CardGame gameName={"Bingo"} />
+        <CardGame gameName={"BlackJack"} />
       </main>
     </>)
   }

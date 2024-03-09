@@ -12,8 +12,12 @@ export default function ProfileView() {
         <div id='profileView'>
         <Thenavbar open = {toggle}/>
         <h1>Amanda1337</h1>
-
+        <div className='toggle'>
+            <button className='togglebtns'>Overview</button>
+            <button className='togglebtns' id='lighter'>Settings</button>
+          </div>
         <main>
+      
         <section>
                 <h2>Profile</h2>
                 <form action="">
@@ -25,6 +29,10 @@ export default function ProfileView() {
                     <h5>Change Password</h5>
                     <input type="text" name="" id="" />
                     <button>Change</button>
+                </form>
+                <form action="">
+                    <h5>Delete Account</h5>
+                    <button>Delete</button>
                 </form>
             </section>
 
@@ -40,20 +48,25 @@ export default function ProfileView() {
                     <input type="text" name="" id="" />
                     <button>Change</button>
                 </form>
+                <form action="">
+                    <h5>Add Credits</h5>
+                    <input type="text" name="" id="" />
+                    <button>Change</button>
+                </form>
             </section>
 
             <section>
-                <h2>Friends</h2>
+                {/* <h2>Friends</h2>
                 <form action="">
                     <h5>Add user</h5>
                     <input type="text" name="" id="" />
                     <button>Change</button>
                 </form>
                 <form action="">
-                    <h5>Remove</h5>
+                    <h5>Remove follower</h5>
                     <input type="text" name="" id="" />
                     <button>Change</button>
-                </form>
+                </form> */}
             </section>
         </main>           
         </div>

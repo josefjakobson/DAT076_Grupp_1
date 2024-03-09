@@ -12,6 +12,7 @@ import LoginView from './views/LoginView';
 import RouletteView from './views/RouletteView';
 import BlackJackView from './views/BlackJackView';
 import ProfileView from './views/Profile';
+import ScorboardView from './views/ScorboardView';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/Profile",
     element: <ProfileView/>,
+  },
+  {
+    path: "/Scoreboard",
+    element: <ScorboardView/>,
   },
 ]);
 root.render(

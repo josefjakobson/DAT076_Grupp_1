@@ -11,6 +11,7 @@ import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
 import RouletteView from './views/RouletteView';
 import BlackJackView from './views/BlackJackView';
+import ProfileView from './views/Profile';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -30,8 +31,12 @@ const router = createBrowserRouter([
     element: <RouletteView/>,
   },
   {
-    path: "/blackjack",
+    path: "/BlackJack",
     element: <BlackJackView/>,
+  },
+  {
+    path: "/Profile",
+    element: <ProfileView/>,
   },
 ]);
 root.render(

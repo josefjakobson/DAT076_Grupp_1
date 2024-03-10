@@ -8,7 +8,8 @@ export const app = express();
 app.use(session({
 secret : "TheKey", // TODO Move to separate file. DO NOT UPLOAD TO GITHUB!!!!
 resave : false,
-saveUninitialized : true
+saveUninitialized : false,
+cookie: { secure: false } // for HTTP; set true for HTTPS
 }));
 app.use(cors({
 origin: true,

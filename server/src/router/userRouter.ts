@@ -59,12 +59,14 @@ userRouter.post("/user", async (
 });
 
 userRouter.get("/credit", async (
-    req: Request<{ username: string }>,
+    // req : Request<{},User[],{}>, res : Response<String | boolean>,
+    req: Request<{},{}, {}>,
     res: Response<string | boolean>
 ) => {
     try {
+        console.log(req.session)
         const credits = await userService.getCredits(req.query.username as string);
-        console.log(credits.toString());
+        // console.log(credits.toString());
         res.status(200).send(credits.toString());
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -91,6 +93,26 @@ interface LoginRequest extends Request{
     session : any,
     body : {username : string, password : string}
 }
+
+// userRouter.post('/login', (req : any, res) => {
+//     const { username } = req.body;
+//     req.session.username = username;
+//     console.log(req.session)
+//     res.send(`Logged in as ${username}`);
+
+//   });
+  
+//   // Profile route
+//   userRouter.get('/credit', (req : any, res) => {
+//     console.log(req.session)
+//     if (req.session.username) {
+//       res.send(`Welcome to your profile, ${req.session.username}`);
+//     } else {
+//       res.send('Please login to view your profile');
+//     }
+
+//   });
+
 userRouter.post("/login", async (
     req : LoginRequest, 
     res : Response<boolean | string>
@@ -105,9 +127,12 @@ userRouter.post("/login", async (
             res.status(401).send("Username or password not found");
         }
 
-        req.session.user = req.body.username;
+        req.session.user = { username: req.body.username };
         res.status(200).send(true)
-        console.log(req.session.user)
+        console.log(req.session)
+        
+
+        // console.log(req.session.user)
     } catch (e : any) {
         res.status(500).send(e.message);
     }

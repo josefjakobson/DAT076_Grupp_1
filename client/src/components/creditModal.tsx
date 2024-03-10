@@ -19,7 +19,6 @@ export default function Modal(props: ModalType) {
       {params:{
         username: '1'
       }});
-    
     console.log(response);
     return response;
   }

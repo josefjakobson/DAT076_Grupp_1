@@ -7,7 +7,9 @@ import LoginForm from '../components/loginForm';
 import SignupForm from '../components/signup';
 //import '../styles/style.scss'
 import  '../styles/frontpage.scss'
+import axios from 'axios';
 
+axios.defaults.withCredentials = true;
 
 
 export default function LoginView() {

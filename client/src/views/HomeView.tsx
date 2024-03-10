@@ -5,8 +5,10 @@ import CardGame from '../components/cardGames';
 import Thenavbar from '../components/navbar';
 import useModal from '../hooks/useModal';
 import Modal from '../components/creditModal';
+import axios from 'axios';
 //import '../styles/style.scss'
 
+axios.defaults.withCredentials = true;
 
 export default function HomeView() {
   const {isOpen, toggle} = useModal();

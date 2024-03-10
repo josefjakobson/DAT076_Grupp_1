@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useRef, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
+axios.defaults.withCredentials = true;
+
 export interface User {
   user_id : number;
   username : string;
@@ -32,7 +35,8 @@ export default function LoginForm() {
     try {
       // const response = await axios.get<User>("http://localhost:8080/userRouter/user", {
       //   params: {
-      //     username: inUsername
+      //     username: inUsername,
+      //     password: inPassword
       //   }
       // });
       const response = await axios.post<User>("http://localhost:8080/userRouter/login", {
@@ -40,10 +44,11 @@ export default function LoginForm() {
         password: inPassword
       });
       const user = response.data;
-      navigate('/games');
-      
-      
+      console.log(response)
+      navigate('/games');      
       seterrorSignIn(true)
+
+
     } catch (error: any) {
       console.log(error);
     }

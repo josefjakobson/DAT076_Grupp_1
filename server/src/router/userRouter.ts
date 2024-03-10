@@ -37,10 +37,7 @@ userRouter.get("/user", async (
     res: Response<User | null>
 ) => {
     try {
-        console.log(req.body.username)
-        const user = await userService.getUser(req.body.username);
-        console.log(user)
-
+        const user = await userService.getUser(req.query.username as string);
         res.status(200).send(user);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -66,7 +63,7 @@ userRouter.get("/credit", async (
     res: Response<string | boolean>
 ) => {
     try {
-        const credits = await userService.getCredits(req.body.username);
+        const credits = await userService.getCredits(req.query.username as string);
         console.log(credits.toString());
         res.status(200).send(credits.toString());
     } catch (e: any) {

@@ -7,11 +7,14 @@ import TheNavbar from './components/navbar';
 import CardGame from './components/cardGames';
 import './styles/style.scss'
 import HomeView from './views/HomeView';
+
 // Define the User interface
 export interface User {
   user_id: number;
   amount: number;
 }
+axios.defaults.withCredentials = true;
+
 
 function App() {
   const [userCredit, setUserCredit] = useState<number | undefined>(undefined);

@@ -65,7 +65,7 @@ export default function SignupForm() {
             password: inPassword,
         });
         const users = response.data;
-
+        console.log(users)
         if (response.status != 200)
         {
           setUsernameNotUniqe(true);

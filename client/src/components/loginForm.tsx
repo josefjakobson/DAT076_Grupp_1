@@ -21,8 +21,6 @@ export default function LoginForm() {
     event.preventDefault();
     const username = usernameRef.current?.value || '';
     const password = passwordRef.current?.value || '';
-    console.log('Username:', username);
-    console.log('Password:', password);
 
     if (usernameRef.current) usernameRef.current.value = '';
     if (passwordRef.current) passwordRef.current.value = '';
@@ -30,16 +28,21 @@ export default function LoginForm() {
     LoginUser(username, password)
   };
 
-  async function LoginUser(username: string, password: string) {
+  async function LoginUser(inUsername: string, inPassword: string) {
     try {
-      const response = await axios.get<User[]>("http://localhost:8080/userRouter/user");  
-      const users = response.data;
-      console.log(users)
-      for (let i = 0; i < users.length; i++) {
-        if (users[i].username == username && users[i].password == password) {
-          navigate('/games');
-        }
-      }
+      // const response = await axios.get<User>("http://localhost:8080/userRouter/user", {
+      //   params: {
+      //     username: inUsername
+      //   }
+      // });
+      const response = await axios.post<User>("http://localhost:8080/userRouter/login", {
+        username: inUsername,
+        password: inPassword
+      });
+      const user = response.data;
+      navigate('/games');
+      
+      
       seterrorSignIn(true)
     } catch (error: any) {
       console.log(error);

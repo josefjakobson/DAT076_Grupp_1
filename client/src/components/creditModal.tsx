@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import "../styles/creditModal.scss";
 import axios from "axios";
 import { User } from '../../../server/src/model/user';
+import { CloseButton } from "react-bootstrap";
 
 
 export interface ModalType {
@@ -21,17 +22,25 @@ export default function Modal(props: ModalType) {
     
     console.log(response);
     return response;
-}
+  }
+
+  async function AddCredits(){
+    const response = await axios.put("http://localhost:8080/userRouter/credit", {
+      username: '1',
+      changeAmount: 10
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 
 
   useEffect(() => {
     async function fetchCredits() {
       try {
         const response = await GetCredits();
-        setCredits(response.data); // Assuming credits are in response.data.credits
+        setCredits(response.data); 
       } catch (error) {
         console.error("Error fetching credits:", error);
-        // Handle errors as needed, e.g., display an error message
       }
     }
   
@@ -41,11 +50,13 @@ export default function Modal(props: ModalType) {
   return (
     <>
       {props.isOpen && (
-        <div className="modal-overlay" onClick={props.toggle}>
-          <div  className="modal-box">
+        <div className="modal-overlay">
+          <div className="modal-box">
             <div>
-              <h2>Current Credits: {credits}</h2>        
+              <h2>Current Credits: {credits}</h2>
+              <button onClick={AddCredits}> Add Credits</button>
             </div>
+            <CloseButton id="closebutton" onClick={props.toggle} />
           </div>
         </div>
       )}

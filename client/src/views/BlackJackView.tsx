@@ -18,7 +18,7 @@ export default function BlackJackView() {
       <Banner />
       <main id="frontMain">
         <div>
-          <BlackJack></BlackJack>
+          <BlackJack user_id={1}></BlackJack>
         </div>
       </main>
     </>)

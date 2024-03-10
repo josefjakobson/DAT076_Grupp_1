@@ -6,7 +6,7 @@ export interface IUserService{
     getUsers():Promise<User[]>;
     
     // Returns the current logged-in user
-    getUser(inUsername : string):Promise<User | null>;
+    getUser(inUsername : string | undefined):Promise<User | null>;
 
     // Tries to add a user with id
     // Returns true if user was added

@@ -8,7 +8,7 @@ export class userDBService implements IUserService{
         return await userModel.find();
     }
 
-    async getUser(inUsername: string): Promise<User | null> {
+    async getUser(inUsername: string | undefined): Promise<User | null> {
         return await userModel.findOne({ username: inUsername });
     }
 

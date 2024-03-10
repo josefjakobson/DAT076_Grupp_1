@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/blackjackstyle.scss';
 import '../../styles/roulettestyle.scss'
+import axios from 'axios';
 
 interface Card {
   name: string;
@@ -30,15 +31,18 @@ function shuffleDeck(): Card[] {
   return deck;
 }
 
+interface BlackJackProps {
+  user_id: number;
+}
 
-function App() {
+function App({ user_id }: BlackJackProps) {
   const [deck, setDeck] = useState<Card[]>([]);
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
   const [computerHand, setComputerHand] = useState<Card[]>([]);
   const [bet, setBet] = useState<number>(100);
-  const [money, setMoney] = useState<number>(1000);
   const [betPlaced, setBetPlaced] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [hasStood, setHasStood] = useState<boolean>(false);
 
   const dealCards = () => {
     const newDeck: Card[] = shuffleDeck();
@@ -51,12 +55,13 @@ function App() {
   };
 
   const hit = (hand: Card[], setHand: React.Dispatch<React.SetStateAction<Card[]>>) => {
+    if(deck.length === 0) return; // Ensure deck is not empty
     const newDeck: Card[] = [...deck];
-    const newHand: Card[] = [...hand];
-    newHand.push(newDeck.pop()!);
+    const newHand: Card[] = [...hand, newDeck.pop()!];
     setDeck(newDeck);
     setHand(newHand);
   };
+  
 
   const calculateHandValue = (cards: Card[]): number => {
     let value: number = 0;
@@ -94,63 +99,111 @@ function App() {
   };
   
   const playStay = async () => {
-    const stayLoop = () => {
-      if (calculateHandValue(computerHand) < 17) {
-        hit(computerHand, setComputerHand);
-        setTimeout(stayLoop, 500); // Delay only if the condition is met
-      } else {
-        determineWinner();
-      }
-    };
-  
-    stayLoop(); // Start the recursion
-  
-    // Stop the recursion if the condition is no longer met
-    setTimeout(() => {
-      determineWinner();
-    }, 500 * (5 - computerHand.length));
+    hit(computerHand, setComputerHand);
+    setHasStood(true);
+    determineWinner();
   };
   
   
-  
-  
-
   const gameOver = () => {
-    return playerValue > 21 || playerHand.length === 5 || computerValue === 21;
+    return playerValue > 21 || playerHand.length === 5 || computerValue === 21 || hasStood;
   };
 
   const increaseBet = () => {
-    setBet(prevBet => prevBet + 100);
+    setBet(prevBet => prevBet + 10);
   };
 
   const decreaseBet = () => {
-    if (bet > 100) {
-      setBet(prevBet => prevBet - 100);
+    if (bet > 10) {
+      setBet(prevBet => prevBet - 10);
     }
   };
 
-  const placeBet = () => {
-    setMoney(prevMoney => prevMoney - bet);
-    setBetPlaced(true);
-    dealCards();
+  const placeBet = async () => {
+    if(await checkCredits()) {
+      remove_credits();
+      setBetPlaced(true);
+      dealCards();
+    } else {
+
+    }
   };
+
+  const checkCredits = async () => {
+    console.log(user_id);
+    try {
+      const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
+        params: {
+          id: user_id
+        }
+      });
+      const credit: number = response.data;
+      console.log(credit);
+      setBetPlaced(credit >= bet);
+      if (credit >= bet) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error fetching user credits:", error);
+    }
+  };
+  
+  const remove_credits = async () => {
+    try {
+      await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+        id: user_id,
+        changeAmount: bet
+      });
+    } catch (error) {
+      console.error("Error removing credits:", error);
+    }
+  }
+
+  const add_credits = async (multiplier: number): Promise<void> => {
+    try {
+      await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
+        id: user_id,
+        changeAmount: bet * multiplier
+      });
+    } catch (error) {
+      console.error("Error adding credits:", error);
+    }
+  };
+  
+
+  const reset = () => {
+    if (determineWinner() == "Player Wins!") {
+      add_credits(2);
+    } else if (determineWinner() == "It's a Tie!") {
+      add_credits(1);
+    }
+    setDeck([]);
+    setPlayerHand([]);
+    setComputerHand([]);
+    setBetPlaced(false);
+    setGameStarted(false);
+    setHasStood(false);
+  }
 
   return (
     <div className="blackjackcontainer">
-      <div id='cash'>Cash: ${money}</div>
-      <div id='bet'>Bet: ${bet}</div>
+      <div id='bet'>Bet: {bet} credits</div>
       <div className='rounded-container'>
-        <div className='changeBet clearfix'>
-          <button id='subBet' className='lil button' onClick={decreaseBet} disabled={betPlaced}>-</button>
-          <button id='placeBet' className='big button' onClick={placeBet} disabled={betPlaced}>Place Bet</button>
-          <button id='addBet' className='lil button last' onClick={increaseBet} disabled={betPlaced}>+</button>
-        </div>
+      {!gameStarted && <div className='changeBet clearfix'>
+          <button id='subBet' className='button' onClick={decreaseBet} disabled={betPlaced}>-</button>
+          <button id='placeBet' className='button' onClick={placeBet} disabled={betPlaced}>Place Bet</button>
+          <button id='addBet' className='button last' onClick={increaseBet} disabled={betPlaced}>+</button>
+        </div>}
+        {gameStarted && !gameOver() && betPlaced && <div className='clearfix'>
+        <button id='playHit' className='button' onClick={() => hit(playerHand, setPlayerHand)} disabled={gameOver() || hasStood}>Hit</button>
+        <button id='playStay' className='button last' onClick={playStay} disabled={hasStood}>Stay</button>
+        </div>}
+        {gameStarted && gameOver() && betPlaced && <div className='clearfix'>
+        <button id='reset' className='button' onClick={reset}>Reset/Pay Out</button>
+        </div>}
       </div>
-
-      {gameStarted && betPlaced && <div className='buttons clearfix'>
-        <button id='playHit' className='button' onClick={() => hit(playerHand, setPlayerHand)}>Hit</button>
-        <button id='playStay' className='button last' onClick={playStay}>Stay</button>
-      </div>}
 
       <div className='fullbar clearfix'>
         <div id='reset' className='hide button'>Next Round</div>
@@ -162,24 +215,24 @@ function App() {
         <div className='computer'>Computer:</div>
       </div>
 
-      <div id='gameBoard' className='clearfix'>
+      <div id='gameBoard' className='clearfix rounded-container'>
         <div className='player-section card-section'>
+        <div className='player-value'>Player Hand Value: {playerValue}</div>
           {playerHand.map((card, index) => (
             <div key={index} className='single-left'>
               <div className='facevalue'>{card.face}</div>
               <div className='facetype'>{card.suit}</div>
             </div>
           ))}
-          <div className='player-value'>Player Hand Value: {playerValue}</div>
         </div>
         <div className='computer-section card-section'>
+        <div className='computer-value'>Computer Hand Value: {computerValue}</div>
           {computerHand.map((card, index) => (
             <div key={index} className='single-left'>
               <div className='facevalue'>{card.face}</div>
               <div className='facetype'>{card.suit}</div>
             </div>
           ))}
-          <div className='computer-value'>Computer Hand Value: {computerValue}</div>
         </div>
       </div>
       {gameOver() && <div>{determineWinner()}</div>}

@@ -1,11 +1,20 @@
 import express from "express";
 import { userRouter } from "./router/userRouter";
 import cors from "cors";
+import session from "express-session";
 
 export const app = express();
 
+app.use(session({
+secret : "TheKey", // TODO Move to separate file. DO NOT UPLOAD TO GITHUB!!!!
+resave : false,
+saveUninitialized : true
+}));
+app.use(cors({
+origin: true,
+credentials : true
+}));
 app.use(express.json());
-app.use(cors());
 app.use("/userRouter", userRouter);
 
 

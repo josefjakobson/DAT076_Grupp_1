@@ -28,17 +28,21 @@ export default function LoginForm() {
     LoginUser(username, password)
   };
 
-  async function LoginUser(username: string, password: string) {
+  async function LoginUser(inUsername: string, inPassword: string) {
     try {
-      const response = await axios.get<User>("http://localhost:8080/userRouter/user", 
-      {params:{
-        username: username
-      }})
-      .then((content) =>  {
-        if (content.data.username == username && content.data.password == password) {
-          navigate('/games');
-        }
-        console.log(content)});  
+      // const response = await axios.get<User>("http://localhost:8080/userRouter/user", {
+      //   params: {
+      //     username: inUsername
+      //   }
+      // });
+      const response = await axios.post<User>("http://localhost:8080/userRouter/login", {
+        username: inUsername,
+        password: inPassword
+      });
+      const user = response.data;
+      navigate('/games');
+      
+      
       seterrorSignIn(true)
     } catch (error: any) {
       console.log(error);

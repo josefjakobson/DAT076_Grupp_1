@@ -12,10 +12,8 @@
 }
 
 .blackjackcontainer .clearfix { display: inline-block; }
-/* start commented backslash hack \*/
 .blackjackcontainer * html .clearfix { height: 1%; }
 .blackjackcontainer .clearfix { display: block; }
-/* close commented backslash hack */
 
 .blackjackcontainer html {
   font-size: 8px;
@@ -36,11 +34,6 @@
 .blackjackcontainer .container {
   max-width: 1000px;
   margin: 0 auto;
-}
-
-.blackjackcontainer .buttons {
-  width: 100%;
-  height: 5rem;
 }
 
 .blackjackcontainer .button {
@@ -78,20 +71,7 @@
 .blackjackcontainer .button:hover {
   background: #373737;
   color: #f7f7f7;
-  border: 2px solid #f7f7f7;
   cursor: pointer;
-}
-
-.blackjackcontainer .button.lil {
-  padding: 5%;
-}
-
-.blackjackcontainer .button.big {
-  padding: 5%;
-}
-
-.blackjackcontainer .changeBet {
-  margin-bottom: .5rem;
 }
 
 .blackjackcontainer .computer-value {
@@ -132,8 +112,6 @@
 }
 
 .blackjackcontainer #bet {
-  float: left;
-  text-align: right;
   width: 50%;
   margin-bottom: 1rem;
   font-size: 2rem;
@@ -142,7 +120,7 @@
 .blackjackcontainer .card-section {
   float: left;
   width: 50%;
-  height: 10rem;
+  height: 250px;
 }
 
 .blackjackcontainer .single-left {
@@ -153,7 +131,6 @@
   height: 10rem;
   border: 2px solid #373737;
   border-radius: .5rem;
-  margin-left: -4.5rem;
   padding: .35rem;
 }
 

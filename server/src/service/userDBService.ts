@@ -18,7 +18,7 @@ export class userDBService implements IUserService{
             console.log("Service")
             return true;
         } catch (e: any) {
-            //console.log(e)
+            console.log("addUser", e)
             return false;
         }
     }
@@ -28,7 +28,21 @@ export class userDBService implements IUserService{
             await userModel.deleteOne({username: inUsername})
             return true;
         } catch (e: any) {
-            //console.log(e)
+            console.log("deleteUser", e)
+            return false;
+        }
+    }
+
+    async clearUsers(): Promise<boolean>{
+        try{
+            const currentUsers = await this.getUsers();
+            for(const user of currentUsers){
+                this.deleteUser(user.username);
+            }
+            return true;
+
+        } catch (e: any){
+            console.log("clearUsers", e);
             return false;
         }
     }
@@ -38,8 +52,9 @@ export class userDBService implements IUserService{
         try{
             const query = await userModel.find({username: inUsername}, {_id:0, credits:1});
             const value = query.pop()?.credits;
-            if(value) return value; else return false;
+            if(value != undefined) return value; else return false;
         } catch (e: any){
+            console.log("getCredits", e);
             return false;
         }
     }
@@ -62,7 +77,7 @@ export class userDBService implements IUserService{
             }
     
         } catch(e: any){
-            console.log(e);
+            console.log("updateCredit", e);
             return false;
         }
     }    

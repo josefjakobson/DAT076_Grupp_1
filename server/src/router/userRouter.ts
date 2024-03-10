@@ -8,12 +8,24 @@ const userService: IUserService = new userDBService();
 export const userRouter: Router = express.Router();
 
 userRouter.get("/users", async (
-    req: Request<{}, {}, {username: string}>,
+    req: Request<{}, {}, {}>,
     res: Response<User[]>
 ) => {
     try {
         const users = await userService.getUsers();
         res.status(200).send(users);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+userRouter.post("/users", async (
+    req: Request<{}, {}, {}>,
+    res: Response<boolean>
+) => {
+    try {
+        const success = await userService.clearUsers();
+        res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);
     }
@@ -51,9 +63,11 @@ userRouter.get("/credit", async (
 ) => {
     try {
         const credits = await userService.getCredits(req.body.username);
+        console.log(credits.toString());
         res.status(200).send(credits.toString());
     } catch (e: any) {
         res.status(500).send(e.message);
+        console.log(e);
     }
 });
 

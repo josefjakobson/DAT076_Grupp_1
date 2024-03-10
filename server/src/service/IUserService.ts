@@ -17,6 +17,10 @@ export interface IUserService{
     // Returns true if user was deleted
     // Returns false if user was not deleted
     deleteUser(inUsername : string):Promise<boolean>
+
+    // Tries to clear all users from database
+    // Returns true if successfull, otherwise false
+    clearUsers():Promise<boolean>
     
     // Gets credits of some user, returns false if user not found
     getCredits(inUsername: string | undefined):Promise<number | boolean>

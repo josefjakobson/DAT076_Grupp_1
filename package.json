@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/josefjakobson/DAT076_Grupp_1#readme",
   "dependencies": {
+    "express-session": "^1.18.0",
     "sass": "^1.71.1"
   }
 }

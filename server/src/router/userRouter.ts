@@ -86,11 +86,11 @@ userRouter.get("/credit", async (
 
 
 userRouter.put("/credit", async (
-    req: Request<{}, {}, { username: string, changeAmount: number }>,
+    req: any,
     res: Response<boolean>
 ) => {
     try {
-        const success = await userService.updateCredit(req.body.username, req.body.changeAmount);
+        const success = await userService.updateCredit(req.session.user.username, req.body.changeAmount);
         res.status(200).send(success);
     } catch (e: any) {
         res.status(500).send(e.message);

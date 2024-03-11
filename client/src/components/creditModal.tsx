@@ -43,7 +43,7 @@ export default function Modal(props: ModalType) {
     }
   
     fetchCredits();
-  }, []);
+  }, [props.isOpen]);
   
   return (
     <>

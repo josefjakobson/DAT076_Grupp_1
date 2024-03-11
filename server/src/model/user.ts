@@ -1,5 +1,7 @@
 export interface User {
     user_id : number;
-    amount : number;
+    username : string;
+    password : string;
+    credits : number;
 }
 

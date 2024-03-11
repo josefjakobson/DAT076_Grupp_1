@@ -1,0 +1,29 @@
+
+#errorView {
+    position: absolute;
+    background-color: white;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+
+    button {
+        margin-top: 1rem;
+        background-color: white;
+        font-size: 1.4rem;
+        border-radius: 1rem;
+        padding: 0.2rem 3rem;
+        border: 0.2rem solid;
+        align-self: center;
+    }
+}
+

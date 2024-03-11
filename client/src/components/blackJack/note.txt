@@ -1,0 +1,2 @@
+This was not made entirely fro scratch but certain elements were taken from https://codepen.io/charlie-volpe/pen/mdwRPo and
+modified to work with the backend as well as ported to typescript and react.

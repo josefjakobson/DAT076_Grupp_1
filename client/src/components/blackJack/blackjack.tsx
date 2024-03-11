@@ -50,8 +50,8 @@ function App() {
     setGameStarted(true);
   };
 
-  const hit = (hand: Card[], setHand: React.Dispatch<React.SetStateAction<Card[]>>) => {
-    if(deck.length === 0) return; // Ensure deck is not empty
+  const hit = async (hand: Card[], setHand: React.Dispatch<React.SetStateAction<Card[]>>) => {
+    if(deck.length === 0) return;
     const newDeck: Card[] = [...deck];
     const newHand: Card[] = [...hand, newDeck.pop()!];
     setDeck(newDeck);
@@ -95,7 +95,10 @@ function App() {
   };
   
   const playStay = async () => {
-    hit(computerHand, setComputerHand);
+    await hit(computerHand, setComputerHand);
+    /*while (computerValue < 16) { //This doesn't ever work for some reason
+      await hit(computerHand, setComputerHand);
+    }*/
     setHasStood(true);
     determineWinner();
   };

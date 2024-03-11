@@ -196,7 +196,7 @@ class Roulette extends React.Component<RouletteProps> {
       $bet_r.addEventListener('click', async () => {
         if ($red_bet) {
           if (await this.check_credits()) {
-            this.remove_credits();
+            await this.remove_credits();
             active_bet_r = active_bet_r + 20;
             $red_bet.textContent = active_bet_r.toString();
             if (infoMessage) {
@@ -214,7 +214,7 @@ class Roulette extends React.Component<RouletteProps> {
       $bet_b.addEventListener('click', async () => {
         if ($black_bet) {
           if (await this.check_credits()) {
-            this.remove_credits();
+            await this.remove_credits();
             active_bet_b = active_bet_b + 20;
             $black_bet.textContent = active_bet_b.toString();
             if (infoMessage) {
@@ -232,7 +232,7 @@ class Roulette extends React.Component<RouletteProps> {
       $bet_g.addEventListener('click', async () => {
         if ($green_bet) {
           if (await this.check_credits()) {
-            this.remove_credits();
+            await this.remove_credits();
             active_bet_g = active_bet_g + 20;
             $green_bet.textContent = active_bet_g.toString();
             if (infoMessage) {

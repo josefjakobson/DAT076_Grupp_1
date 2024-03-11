@@ -94,8 +94,6 @@ userRouter.put("/updatePassword", async (
     }
 });
 
-
-
 userRouter.post("/user", async (
     req: Request<{}, {}, {username: string, password: string}>,
     res: Response<boolean>
@@ -109,19 +107,6 @@ userRouter.post("/user", async (
         res.status(500).send(e.message);
     }
 });
-
-// userRouter.get("/credit", async (
-//     req: Request<{},{}, {username : string}>,
-//     res: Response<string | boolean>
-// ) => {
-//     try {
-//         const credits = await userService.getCredits(req.query.username as string);
-//         res.status(200).send(credits.toString());
-//     } catch (e: any) {
-//         res.status(500).send(e.message);
-//         console.log(e);
-//     }
-// });
 
 userRouter.get("/credit", async (
     req: any,
@@ -200,4 +185,13 @@ userRouter.post("/login", async (
     } catch (e : any) {
         res.status(500).send(e.message);
     }
+})
+
+
+userRouter.put("/logout", async (
+    req: any, 
+    res : Response<boolean>
+) => {
+    req.session.user = undefined;
+    res.status(200).send(true)    
 })

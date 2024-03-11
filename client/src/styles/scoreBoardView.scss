@@ -1,5 +1,5 @@
 
-$scoreBoardPadding: 1rem;
+$scoreBoardPadding: 2rem;
 
 
 #ScoreboardView {
@@ -10,7 +10,6 @@ $scoreBoardPadding: 1rem;
         border-radius: 1rem;
         padding: 0;
         display: grid;
-        // padding: 1rem;
 
         h1 {
             border-radius: 2rem;
@@ -22,13 +21,12 @@ $scoreBoardPadding: 1rem;
             width: 100%;
             height: 1px;
             background-color: black;
-            // margin-bottom: 2rem;
         }
 
         section {
             display: flex;
             justify-content: space-between;
-            padding: $scoreBoardPadding;
+            padding: calc($scoreBoardPadding/2) $scoreBoardPadding;
 
             &:nth-of-type(even) {
                 background-color: lightgray;
@@ -42,10 +40,6 @@ $scoreBoardPadding: 1rem;
                 margin: 0 0 0 auto;
             }
         }
-
-
-
-
     }
 }
 

@@ -1,21 +1,20 @@
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../styles/style.scss'
+import React, { useState } from 'react';
 import '../styles/ErrorView.scss'
+import { redirect } from 'react-router-dom';
 
-axios.defaults.withCredentials = true;
+interface ErrorMessageScreenProps {
+  errorMessage: string;
+}
 
-export default function ErrorView({ errorMsg = "You are not logged in" }: { errorMsg?: string }) {
+const ErrorMessageScreen: React.FC<ErrorMessageScreenProps> = ({ errorMessage }) => {
+  return (
+    <div id='errorView'>
+        <div className="error-message">
+          <h1>{errorMessage}</h1>
+          <button onClick={() => {}}>Back</button>
+        </div>
+    </div>
+  );
+}
 
-    return (
-      <>
-        <main id='errorView'>
-          <h1>Oh no! An error has occurred :(</h1>
-          <h3>{errorMsg}</h3>
-          <button>Back to Login</button>
-        </main>
-      </>
-    );
-  }
-  
+export default ErrorMessageScreen;

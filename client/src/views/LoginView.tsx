@@ -14,16 +14,6 @@ axios.defaults.withCredentials = true;
 
 export default function LoginView() {
     const [visibility, setVisibility] = useState(true);
-    // function switchVisability(setVisible : string) {
-    //     if (setVisible == "Login") 
-    //     {
-    //         visability = true;
-    //     }
-    //     else if (setVisible == "SignUp") {
-    //         visability = false;
-    //     }
-    //     console.log(visability)
-    // }
 
     return (
     <>

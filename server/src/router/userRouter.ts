@@ -133,14 +133,18 @@ userRouter.post("/login", async (
         || req.body.username === "" || req.body.password === "") {
             res.status(400).send("Invalid username or password")
         }
-        console.log(await userService.getUser(req.body.username))
-        if (await userService.getUser(req.body.username) == null) {
+        let user = await userService.getUser(req.body.username)
+        if (user?.username == null || user.password == null) {
             res.status(401).send("Username or password not found");
         }
+
+        if (user?.username != req.body.username || user?.password != req.body.password) {
+            res.status(403).send("Username or password is incorrect");
+        }
+
         req.session.user = { username: req.body.username };
         res.status(200).send(true)    
-        console.log(req.session)
-    
+
     } catch (e : any) {
         res.status(500).send(e.message);
     }

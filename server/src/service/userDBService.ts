@@ -9,7 +9,7 @@ export class userDBService implements IUserService{
     }
 
     async getUser(inUsername: string | undefined): Promise<User | null> {
-        return await userModel.findOne({ username: inUsername });
+        return await userModel.findOne({ username: inUsername});
     }
 
     async addUser(id: number, inUsername: string, inPassword: string, credits: number = 0): Promise<boolean> {

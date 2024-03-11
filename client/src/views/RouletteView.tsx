@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
 import Banner from '../components/banner';
-import CardGame from '../components/cardGames';
 import Thenavbar from '../components/navbar';
 import useModal from '../hooks/useModal';
 import Modal from '../components/creditModal';
@@ -19,7 +17,7 @@ export default function RouletteView() {
       <Banner />
       <main id="frontMain">
         <div>
-          <Roulette user_id={1}/>
+          <Roulette></Roulette>
         </div>
       </main>
     </>)

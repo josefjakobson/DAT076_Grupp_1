@@ -121,7 +121,7 @@ function App({ user_id }: BlackJackProps) {
 
   const placeBet = async () => {
     if(await checkCredits()) {
-      remove_credits();
+      await remove_credits();
       setBetPlaced(true);
       dealCards();
     } else {
@@ -132,11 +132,7 @@ function App({ user_id }: BlackJackProps) {
   const checkCredits = async () => {
     console.log(user_id);
     try {
-      const response = await axios.get<number>("http://localhost:8080/userRouter/credit", {
-        params: {
-          id: user_id
-        }
-      });
+      const response = await axios.get<number>("http://localhost:8080/userRouter/credit");
       const credit: number = response.data;
       console.log(credit);
       setBetPlaced(credit >= bet);
@@ -153,7 +149,6 @@ function App({ user_id }: BlackJackProps) {
   const remove_credits = async () => {
     try {
       await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
-        id: user_id,
         changeAmount: bet
       });
     } catch (error) {

@@ -22,8 +22,10 @@ export default function Modal(props: ModalType) {
 
   async function AddCredits(){
     const response = await axios.put("http://localhost:8080/userRouter/credit", {
-      username: '1',
       changeAmount: 10
+    }).then(async () => {
+      const newCredits = await GetCredits();
+      setCredits(newCredits.data);
     }).catch(error => {
       console.log(error);
     });

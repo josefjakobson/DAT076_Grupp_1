@@ -58,21 +58,32 @@ userRouter.post("/user", async (
     }
 });
 
+// userRouter.get("/credit", async (
+//     req: Request<{},{}, {username : string}>,
+//     res: Response<string | boolean>
+// ) => {
+//     try {
+//         const credits = await userService.getCredits(req.query.username as string);
+//         res.status(200).send(credits.toString());
+//     } catch (e: any) {
+//         res.status(500).send(e.message);
+//         console.log(e);
+//     }
+// });
+
 userRouter.get("/credit", async (
-    // req : Request<{},User[],{}>, res : Response<String | boolean>,
-    req: Request<{},{}, {}>,
+    req: any,
     res: Response<string | boolean>
 ) => {
     try {
-        console.log(req.session)
-        const credits = await userService.getCredits(req.query.username as string);
-        // console.log(credits.toString());
+        const credits = await userService.getCredits(req.session.user.username as string);
         res.status(200).send(credits.toString());
     } catch (e: any) {
         res.status(500).send(e.message);
         console.log(e);
     }
 });
+
 
 userRouter.put("/credit", async (
     req: Request<{}, {}, { username: string, changeAmount: number }>,
@@ -126,13 +137,10 @@ userRouter.post("/login", async (
         if (await userService.getUser(req.body.username) == null) {
             res.status(401).send("Username or password not found");
         }
-
         req.session.user = { username: req.body.username };
-        res.status(200).send(true)
+        res.status(200).send(true)    
         console.log(req.session)
-        
-
-        // console.log(req.session.user)
+    
     } catch (e : any) {
         res.status(500).send(e.message);
     }

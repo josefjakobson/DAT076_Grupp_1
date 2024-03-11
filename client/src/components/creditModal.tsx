@@ -15,10 +15,7 @@ export default function Modal(props: ModalType) {
   const [credits, setCredits] = useState(0);  // Assuming initial value is 0
 
   async function GetCredits(){
-    const response = await axios.get("http://localhost:8080/userRouter/credit", 
-      {params:{
-        username: '1'
-      }});
+    const response = await axios.get("http://localhost:8080/userRouter/credit");
     console.log(response);
     return response;
   }

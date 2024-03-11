@@ -1,12 +1,8 @@
-import React from "react";
+import { Component } from 'react';
 import '../../styles/roulettestyle.scss';
 import axios from "axios";
 
-interface RouletteProps {
-  user_id: number;
-}
-
-class Roulette extends React.Component<RouletteProps> {
+class Roulette extends Component{
   componentDidMount(): void {
     const $inner: HTMLElement | null = document.querySelector('.inner');
     const $spin: HTMLButtonElement | null = document.getElementById('spin') as HTMLButtonElement;
@@ -249,7 +245,6 @@ class Roulette extends React.Component<RouletteProps> {
   }
   
   async check_credits(): Promise<boolean> {
-    console.log(this.props.user_id);
     try {
       const response = await axios.get<number>("http://localhost:8080/userRouter/credit")
       const credit: number = response.data;
@@ -274,7 +269,6 @@ class Roulette extends React.Component<RouletteProps> {
   async add_credits(number: number, multiplier: number) {
     try {
       await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
-        id: this.props.user_id,
         changeAmount: (number * multiplier)
       });
     } catch (error) {

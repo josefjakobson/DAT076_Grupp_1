@@ -17,7 +17,7 @@ export default function RouletteView() {
       <Banner />
       <main id="frontMain">
         <div>
-          <Roulette user_id={1}/>
+          <Roulette></Roulette>
         </div>
       </main>
     </>)

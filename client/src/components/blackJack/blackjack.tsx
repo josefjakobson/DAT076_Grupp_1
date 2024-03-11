@@ -31,11 +31,7 @@ function shuffleDeck(): Card[] {
   return deck;
 }
 
-interface BlackJackProps {
-  user_id: number;
-}
-
-function App({ user_id }: BlackJackProps) {
+function App() {
   const [deck, setDeck] = useState<Card[]>([]);
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
   const [computerHand, setComputerHand] = useState<Card[]>([]);
@@ -130,7 +126,6 @@ function App({ user_id }: BlackJackProps) {
   };
 
   const checkCredits = async () => {
-    console.log(user_id);
     try {
       const response = await axios.get<number>("http://localhost:8080/userRouter/credit");
       const credit: number = response.data;
@@ -149,7 +144,7 @@ function App({ user_id }: BlackJackProps) {
   const remove_credits = async () => {
     try {
       await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
-        changeAmount: bet
+        changeAmount: -bet
       });
     } catch (error) {
       console.error("Error removing credits:", error);
@@ -159,7 +154,6 @@ function App({ user_id }: BlackJackProps) {
   const add_credits = async (multiplier: number): Promise<void> => {
     try {
       await axios.put<boolean>("http://localhost:8080/userRouter/credit", {
-        id: user_id,
         changeAmount: bet * multiplier
       });
     } catch (error) {

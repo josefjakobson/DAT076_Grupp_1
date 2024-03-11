@@ -20,6 +20,7 @@ userRouter.get("/users", async (
     }
 });
 
+/*  FOR TESTING PURPOSES
 userRouter.post("/users", async (
     req: Request<{}, {}, {}>,
     res: Response<boolean>
@@ -30,7 +31,7 @@ userRouter.post("/users", async (
     } catch (e: any) {
         res.status(500).send(e.message);
     }
-});
+});*/
 
 userRouter.get("/user", async (
     req: Request<{}, {}, {username: string | undefined}>,

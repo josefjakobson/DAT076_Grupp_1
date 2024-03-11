@@ -19,7 +19,7 @@ export default function TheNavbar({ open }: { open: () => void } ) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/games">Home</Nav.Link>
+            <Nav.Link href="/games">Games</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/Scoreboard">ScoreBoard</Nav.Link>
           </Nav>

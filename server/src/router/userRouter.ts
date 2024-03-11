@@ -45,6 +45,57 @@ userRouter.get("/user", async (
     }
 });
 
+userRouter.get("/currentUser", async (
+    req: any,
+    res: Response<User | null>
+) => {
+    try {
+        const user = await userService.getUser(req.session.user.username as string);
+        res.status(200).send(user);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+interface UpdateUsernameRequest extends Request {
+    params : {},
+    session : any,
+    body : {newUsername : string }
+}
+
+userRouter.put("/updateUsername", async (
+    req: UpdateUsernameRequest,
+    res: Response<boolean | null>
+) => {
+    try {
+        const user = await userService.updateUsername(req.session.user.username, req.body.newUsername);
+        req.session.user.username = req.body.newUsername;
+        res.status(200).send(true);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+interface UpdatePasswordRequest extends Request {
+    params : {},
+    session : any,
+    body : {newPassword : string }
+}
+
+userRouter.put("/updatePassword", async (
+    req: UpdatePasswordRequest,
+    res: Response<boolean | null>
+) => {
+    try {
+        const user = await userService.updatePassword(req.session.user.username, req.body.newPassword);
+        res.status(200).send(true);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+
+
 userRouter.post("/user", async (
     req: Request<{}, {}, {username: string, password: string}>,
     res: Response<boolean>

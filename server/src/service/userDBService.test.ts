@@ -1,5 +1,5 @@
-// import mongoose from "mongoose";
-// import { userDBService } from "./userDBService";
+import mongoose from "mongoose";
+import { userDBService } from "./userDBService";
 
 // test("Added users should show up in the database", async () => {
 //     const service = new userDBService();
@@ -48,4 +48,17 @@
 //     const user1Cred = await service.getCredits("user1");
 //     expect(user1Cred == 5).toBeTruthy();
 //     await service.deleteUser("user1");
+// })
+
+
+// test("Updating username to a user should update the database", async () => {
+//     const service = new userDBService();
+//     let res = await service.addUser(23, "user23", "123", 10);
+//     expect(res == true).toBeTruthy();
+//     await service.updateUsername("user23", "Amanda17");
+//     const user = await service.getUser("Amanda17");
+//     const user2 = await service.getUser("user23");
+//     expect(user?.username == "Amanda17").toBeTruthy();
+//     expect(user2?.username == null).toBeTruthy();
+//     await service.deleteUser("Amanda17");
 // })

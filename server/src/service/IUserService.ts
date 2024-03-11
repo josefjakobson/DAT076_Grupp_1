@@ -13,6 +13,16 @@ export interface IUserService{
     // Returns false if id was already in use and user was not added
     addUser(id: number, inUsername : string, inPassword: string, credits: number):Promise<boolean>
 
+    // Tries to update user username
+    // Returns true if user username was updated
+    // Returns false if user username was not able to be updated
+    updateUsername(inUsername: string, newUsername: string): Promise<boolean | string> 
+
+    // Tries to update user password
+    // Returns true if user password was updated
+    // Returns false if user password was not able to be updated
+    updatePassword(inUsername: string, newPassword: string): Promise<boolean | string> 
+
     // Tries to delete a user with username
     // Returns true if user was deleted
     // Returns false if user was not deleted

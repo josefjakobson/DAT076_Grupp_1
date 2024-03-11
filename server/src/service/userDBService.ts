@@ -23,6 +23,36 @@ export class userDBService implements IUserService{
         }
     }
 
+    async updateUsername(inUsername: string, newUsername: string): Promise<boolean | string> {
+        const updatedUser = await userModel.findOneAndUpdate(
+            { username: inUsername },
+            { username: newUsername },
+            { new: true } 
+        );
+        if (updatedUser) {
+            console.log("Username updated successfully");
+            return true;
+        } else {
+            console.log("User not found");
+            return "User not found";
+        }
+    }
+
+    async updatePassword(inUsername: string, newPassword: string): Promise<boolean | string> {
+        const updatedUser = await userModel.findOneAndUpdate(
+            { username: inUsername },
+            { password: newPassword },
+            { new: true }
+        );
+        if (updatedUser) {
+            console.log("Password updated successfully");
+            return true;
+        } else {
+            console.log("User not found");
+            return "User not found";
+        }
+    }
+
     async deleteUser(inUsername: string): Promise<boolean> {
         try{
             await userModel.deleteOne({username: inUsername})

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import '../styles/ErrorView.scss'
-import { redirect } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 
 interface ErrorMessageScreenProps {
   errorMessage: string;
 }
 
 const ErrorMessageScreen: React.FC<ErrorMessageScreenProps> = ({ errorMessage }) => {
+  const navigate = useNavigate();
+
   return (
     <div id='errorView'>
         <div className="error-message">
           <h1>{errorMessage}</h1>
-          <button onClick={() => {}}>Back</button>
+          <button onClick={() => { navigate('/') }}>Back to login</button>
         </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useRef, FormEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { Link, redirect, useNavigate } from 'react-router-dom';
+import ErrorMessageScreen from '../views/ErrorView';
 
 axios.defaults.withCredentials = true;
 
@@ -9,16 +9,19 @@ export interface User {
   user_id : number;
   username : string;
   password : string;
-  amount : number;
+  credits : number;
 }
 
+
 export default function LoginForm() {
-
   const [errorSignIn, seterrorSignIn] = useState(false);
-
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showError, setShowError] = useState<boolean>(true); 
+
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -29,35 +32,53 @@ export default function LoginForm() {
     if (passwordRef.current) passwordRef.current.value = '';
 
     LoginUser(username, password)
+    return;
+
   };
 
   async function LoginUser(inUsername: string, inPassword: string) {
     try {
-      // const response = await axios.get<User>("http://localhost:8080/userRouter/user", {
-      //   params: {
-      //     username: inUsername,
-      //     password: inPassword
-      //   }
-      // });
+      console.log(inUsername);
+      console.log(inPassword);
+  
       const response = await axios.post<User>("http://localhost:8080/userRouter/login", {
         username: inUsername,
         password: inPassword
       });
-      const user = response.data;
-      console.log(response)
-      navigate('/games');      
-      seterrorSignIn(true)
-
-
-    } catch (error: any) {
-      console.log(error);
+  
+      navigate('/games');
+  
+    } catch (error : any) {
+      console.error(error); // Log the error for debugging purposes
+  
+      if (error.response) {
+        const status = error.response.status;
+        const errorMessage = error.response.data;
+  
+        if (status === 401 || status === 403) {
+          setErrorMsg(errorMessage);
+          seterrorSignIn(true);
+        } else {
+          setErrorMessage('An error occurred!');
+        }
+      } else {
+        setErrorMessage('An error occurred while processing your request.');
+      }
     }
+    return;
   }
 
+  const handleCloseError = () => {
+    setShowError(false); // Close the error screen
+  };
+  
+
   return (
-    <div>
+    <>
+      {false && <ErrorMessageScreen errorMessage={errorMessage} />}
+      <div>
       <form onSubmit={handleSubmit}>
-      {errorSignIn && <p className='errorMsgLogIn'>Incorrect username or password.</p>}        
+      {errorSignIn && <p className='errorMsgLogIn'>{errorMsg}</p>}        
         <div>
           <input
             type="text"
@@ -77,5 +98,8 @@ export default function LoginForm() {
         </button>
       </form>
     </div>
+    </>
+ 
   );
 }
+

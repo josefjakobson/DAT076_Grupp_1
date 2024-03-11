@@ -44,10 +44,6 @@ const router = createBrowserRouter([
     path: "/Scoreboard",
     element: <ScorboardView/>,
   },
-  {
-    path: "/ErrorView",
-    element: <ErrorView/>,
-  },
 ]);
 root.render(
   //<React.StrictMode>

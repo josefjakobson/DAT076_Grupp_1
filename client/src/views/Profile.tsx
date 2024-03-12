@@ -8,25 +8,19 @@ import { User } from '../components/loginForm';
 import ErrorMessageScreen from './ErrorView';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
-
-
-
-
 export default function ProfileView() {
     const {isOpen, toggle} = useModal();
     const usernameUpdateRef = useRef<HTMLInputElement>(null);
+    const upasswordUpdateRef = useRef<HTMLInputElement>(null);
+
     const [user, setUser] = useState<User>(); 
     const [logdin, setlogdin] = useState<boolean>(true); 
     const navigate = useNavigate();
 
     useEffect(() => {
-        getUser(); // Call the getUser function here
-    }, []); // Empty dependency array ensures this effect runs only once
+        getUser(); 
+    }, []);
 
- 
     async function getUser() {
         try {
             const response = await axios.get("http://localhost:8080/userRouter/currentUser");
@@ -47,16 +41,19 @@ export default function ProfileView() {
     }
 
     async function changePassword() {
-        const newPassword = usernameUpdateRef.current?.value || '';
+        const newPassword = upasswordUpdateRef.current?.value || '';
+        if (upasswordUpdateRef.current) upasswordUpdateRef.current.value = '';
+
         const response = await axios.put("http://localhost:8080/userRouter/updatePassword",{
             newPassword: newPassword
           }
         );
-        console.log("change password")
+        getUser()
     }
  
     async function changeUsername() {
         const newUsername = usernameUpdateRef.current?.value || '';
+        if (usernameUpdateRef.current) usernameUpdateRef.current.value = '';
         const response = await axios.put("http://localhost:8080/userRouter/updateUsername",{
             newUsername: newUsername
           }
@@ -64,10 +61,6 @@ export default function ProfileView() {
         if (response.data == true) {
             getUser()
         }
-    }
-
-    async function deleteUser() {
-        console.log("delete user")
     }
 
     async function logOut() {
@@ -82,65 +75,62 @@ export default function ProfileView() {
         
         <div id='profileView'>
         <Thenavbar open = {toggle}/>
-        <h1>{user?.username}</h1>
-        {/* <div className='toggle'>
-            <button className='togglebtns'>Overview</button>
-            <button className='togglebtns' id='lighter'>Settings</button>
-          </div> */}
-        <main>
+        <main>   
+        <h1>Account</h1>
+
+            <h2>Information</h2>
+            <div className='devider'/>
+
+            <div className='Userinfo'>
+                    <h5>ID:</h5>
+                    <h5>{user?.user_id}</h5>
+                </div>
+                <div className='devider'/>
+                <div className='Userinfo'>
+                    <h5>Username:</h5>
+                    <h5>{user?.username}</h5>
+                </div>
+                <div className='devider'/>
+                <div className='Userinfo'>
+                    <h5>Password:</h5>
+                    <h5>{user?.password}</h5>
+                </div>
+                <div className='devider'/>
+                <div className='Userinfo'>
+                    <h5>Credits:</h5>
+                    <h5>{user?.credits}</h5>
+                </div>
+                
+                <div className='devider'/>
+       
+
+            <h2 id='settingsTitle'>Settings</h2>
+            <div id='settings'>
+            <div>
+                <h5>Change Username</h5>
+
+                <input type="text" placeholder="New username" ref={usernameUpdateRef} />
+                <button onClick={changeUsername}>Change Username</button>
+            </div>
+
+                    
+            <div>
+            <h5>Change Password</h5>
+
+                <input type="password" placeholder="New Password" ref={upasswordUpdateRef}/>
+                <button onClick={changePassword}>Change Password</button>
+            </div>
+            </div>
+     
+
+                    
+            <button onClick={logOut}>Log Out</button>
+
+        </main>
+
       
-        <section>
-                <h2>Profile</h2>
-                    <h5>Change Username</h5>
-                    <input
-                        type="text"
-                        placeholder="New username"
-                        ref={usernameUpdateRef} 
-                    />
-                    <button onClick={changeUsername}>Change</button>
-                    <h5>Change Password</h5>
-                    <input type="text" name="" id="" />
-                    <button onClick={changePassword}>Change</button>
-                    <button onClick={logOut}>Log Out</button>
-                {/* <form>
-                    <h5>Delete Account</h5>
-                    <button onClick={deleteUser}>Delete</button>
-                </form> */}
-            </section>
-
-            {/* <section>
-                <h2>Credits</h2>
-                <form action="">
-                    <h5>Take Out Credits</h5>
-                    <input type="text" name="" id="" />
-                    <button>Change</button>
-                </form>
-                <form action="">
-                    <h5>Send Credits</h5>
-                    <input type="text" name="" id="" />
-                    <button>Change</button>
-                </form>
-                <form action="">
-                    <h5>Add Credits</h5>
-                    <input type="text" name="" id="" />
-                    <button>Change</button>
-                </form>
-            </section>
-
-            <section> */}
-                {/* <h2>Friends</h2>
-                <form action="">
-                    <h5>Add user</h5>
-                    <input type="text" name="" id="" />
-                    <button>Change</button>
-                </form>
-                <form action="">
-                    <h5>Remove follower</h5>
-                    <input type="text" name="" id="" />
-                    <button>Change</button>
-                </form> */}
-            {/* </section> */}
-        </main>           
+ 
+            
         </div>
 
     </>)

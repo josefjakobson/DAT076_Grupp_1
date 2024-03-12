@@ -15,7 +15,6 @@ export class userDBService implements IUserService{
     async addUser(id: number, inUsername: string, inPassword: string, credits: number = 0): Promise<boolean> {
         try{
             await userModel.create({user_id: id, username: inUsername, password: inPassword, credits});
-            console.log("Service")
             return true;
         } catch (e: any) {
             console.log("addUser", e)

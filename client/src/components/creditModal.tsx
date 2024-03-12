@@ -3,6 +3,7 @@ import "../styles/creditModal.scss";
 import axios from "axios";
 import { User } from '../../../server/src/model/user';
 import { CloseButton } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 export interface ModalType {
@@ -13,11 +14,20 @@ export interface ModalType {
 
 export default function Modal(props: ModalType) {
   const [credits, setCredits] = useState(0);  // Assuming initial value is 0
+  const navigate = useNavigate();
 
   async function GetCredits(){
-    const response = await axios.get("http://localhost:8080/userRouter/credit");
-    console.log(response);
-    return response;
+    try {
+      const response = await axios.get("http://localhost:8080/userRouter/credit");
+      if (response.data == undefined)  {
+        navigate("/")
+      }
+      return response;
+
+    } catch (error) {
+      navigate("/")
+      return {data: 0};
+    }
   }
 
   async function AddCredits(){

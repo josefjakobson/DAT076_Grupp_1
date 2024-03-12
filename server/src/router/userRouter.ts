@@ -2,7 +2,6 @@ import express, { Request, Response, Router } from "express";
 import { User } from "../model/user";
 import { IUserService } from "../service/IUserService";
 import { userDBService } from "../service/userDBService";
-import { Session } from "inspector";
 
 const userService: IUserService = new userDBService();
 
@@ -14,31 +13,34 @@ userRouter.get("/users", async (
 ) => {
     try {
         const users = await userService.getUsers();
+        console.log("here")
+
         res.status(200).send(users);
     } catch (e: any) {
         res.status(500).send(e.message);
     }
 });
 
-/*  FOR TESTING PURPOSES
-userRouter.post("/users", async (
-    req: Request<{}, {}, {}>,
-    res: Response<boolean>
-) => {
-    try {
-        const success = await userService.clearUsers();
-        res.status(200).send(success);
-    } catch (e: any) {
-        res.status(500).send(e.message);
-    }
-});*/
+
+//  FOR TESTING PURPOSES
+// userRouter.post("/users", async (
+//     req: Request<{}, {}, {}>,
+//     res: Response<boolean>
+// ) => {
+//     try {
+//         const success = await userService.clearUsers();
+//         res.status(200).send(success);
+//     } catch (e: any) {
+//         res.status(500).send(e.message);
+//     }
+// });
 
 userRouter.get("/user", async (
     req: Request<{}, {}, {username: string | undefined}>,
     res: Response<User | null>
 ) => {
     try {
-        const user = await userService.getUser(req.query.username as string);
+        const user = await userService.getUser(req.body.username as string);
         res.status(200).send(user);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -50,6 +52,8 @@ userRouter.get("/currentUser", async (
     res: Response<User | null>
 ) => {
     try {
+        console.log(req.session.user.username)
+        console.log("here")
         const user = await userService.getUser(req.session.user.username as string);
         res.status(200).send(user);
     } catch (e: any) {
@@ -142,25 +146,6 @@ interface LoginRequest extends Request{
     body : {username : string, password : string}
 }
 
-// userRouter.post('/login', (req : any, res) => {
-//     const { username } = req.body;
-//     req.session.username = username;
-//     console.log(req.session)
-//     res.send(`Logged in as ${username}`);
-
-//   });
-  
-//   // Profile route
-//   userRouter.get('/credit', (req : any, res) => {
-//     console.log(req.session)
-//     if (req.session.username) {
-//       res.send(`Welcome to your profile, ${req.session.username}`);
-//     } else {
-//       res.send('Please login to view your profile');
-//     }
-
-//   });
-
 userRouter.post("/login", async (
     req : LoginRequest, 
     res : Response<boolean | string>
@@ -168,15 +153,18 @@ userRouter.post("/login", async (
     try {
         if (typeof(req.body.username) !== "string" || typeof(req.body.password) !== "string"
         || req.body.username === "" || req.body.password === "") {
-            res.status(400).send("Invalid username or password")
+            res.status(400).send("Invalid username or password");
+            return;
         }
         let user = await userService.getUser(req.body.username)
         if (user?.username == null || user.password == null) {
             res.status(401).send("Username or password not found");
+            return;
         }
 
         if (user?.username != req.body.username || user?.password != req.body.password) {
             res.status(403).send("Username or password is incorrect");
+            return;
         }
 
         req.session.user = { username: req.body.username };

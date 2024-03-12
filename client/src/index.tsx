@@ -5,7 +5,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
@@ -13,7 +12,7 @@ import RouletteView from './views/RouletteView';
 import BlackJackView from './views/BlackJackView';
 import ProfileView from './views/Profile';
 import ScorboardView from './views/ScorboardView';
-import ErrorView from './views/ErrorView';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

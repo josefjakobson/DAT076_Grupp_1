@@ -1,3 +1,6 @@
+@import './style.scss';
+
+
 .modal-overlay {
   z-index: 9999;
   width: 100vw;
@@ -5,10 +8,8 @@
   position: absolute;
   top: 0;
   background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  }
+  @include center;
+}
   
 .modal-box {
   display: flex;

@@ -1,15 +1,57 @@
+@import './style.scss';
+
+
 #profileView {
     h1 {
-        text-align: center;
-        padding: 10rem 0 2rem 0;
+        text-align: start;
     }
     main {
         display: flex;
+        flex-direction: column;
+        padding: 5rem;
 
-        section {
-            padding: 1rem;
-            background-color: aliceblue;
+        .Userinfo {
+            display: flex;
+            flex-direction: row;
+
+            h5 {
+                font-weight: lighter;
+            }
+
+            :first-child {
+                color: gray;
+                margin-right: auto;
+
+            }
             
         }
+
+        #settingsTitle {
+            margin-top: 2rem
+        }
+
+        #settings {
+            @include center;
+            justify-content: start;
+            flex-direction: row;
+            margin-bottom: 2rem;
+            
+
+            // display: flex;
+            // flex-direction: column;
+            div {
+                display: flex;
+                flex-direction: column;
+                margin-right: 2rem;
+
+            }
+       
+        }
+
+        .devider {
+            background-color: rgb(182, 182, 182);
+            grid-area: dev;
+        }
+
     }
 }

@@ -2,7 +2,6 @@ import express, { Request, Response, Router } from "express";
 import { User } from "../model/user";
 import { IUserService } from "../service/IUserService";
 import { userDBService } from "../service/userDBService";
-import { Session } from "inspector";
 
 const userService: IUserService = new userDBService();
 
@@ -168,15 +167,19 @@ userRouter.post("/login", async (
     try {
         if (typeof(req.body.username) !== "string" || typeof(req.body.password) !== "string"
         || req.body.username === "" || req.body.password === "") {
-            res.status(400).send("Invalid username or password")
+            res.status(400).send("Invalid username or password");
+            return;
+
         }
         let user = await userService.getUser(req.body.username)
         if (user?.username == null || user.password == null) {
             res.status(401).send("Username or password not found");
+            return;
         }
 
         if (user?.username != req.body.username || user?.password != req.body.password) {
             res.status(403).send("Username or password is incorrect");
+            return;
         }
 
         req.session.user = { username: req.body.username };

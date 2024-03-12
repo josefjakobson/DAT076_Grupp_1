@@ -39,6 +39,7 @@ function App() {
   const [betPlaced, setBetPlaced] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [hasStood, setHasStood] = useState<boolean>(false);
+  const [infoMessage, setInfoMessage] = useState<string>("It's gaming time 😎");
 
   const dealCards = () => {
     const newDeck: Card[] = shuffleDeck();
@@ -121,10 +122,11 @@ function App() {
   const placeBet = async () => {
     if(await checkCredits()) {
       await remove_credits();
+      setInfoMessage("Bet locked in.");
       setBetPlaced(true);
       dealCards();
     } else {
-
+      setInfoMessage("Insufficient credits.");
     }
   };
 
@@ -168,8 +170,12 @@ function App() {
   const reset = () => {
     if (determineWinner() == "Player Wins!") {
       add_credits(2);
+      setInfoMessage(bet * 2 + " paid out.")
     } else if (determineWinner() == "It's a Tie!") {
       add_credits(1);
+      setInfoMessage(bet + " paid out.")
+    } else {
+      setInfoMessage("No payout.")
     }
     setDeck([]);
     setPlayerHand([]);
@@ -200,6 +206,12 @@ function App() {
       <div className='fullbar clearfix'>
         <div id='reset' className='hide button'>Next Round</div>
         <div id='startover' className='hide button'>Start Over</div>
+      </div>
+
+      <div className="rounded-container">
+        <center>
+          <div className="infoMessage">{infoMessage}</div>
+        </center>
       </div>
 
       <div className='title clearfix'>

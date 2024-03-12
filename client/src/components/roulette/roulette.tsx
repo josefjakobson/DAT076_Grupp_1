@@ -282,7 +282,6 @@ class Roulette extends Component{
       <body className="rouletteContainer">
         <meta charSet="UTF-8" />
         <title>CodePen - CSS Roulette Wheel</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" /><link rel="stylesheet" href="./style.css" />
         <div className="main">
           <center>
             <button type="button" className="btn" id="spin"><span className="btn-label">Spin</span></button> 

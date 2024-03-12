@@ -50,10 +50,6 @@ function App() {
 
   return (
     <div className="App">
-      
-      {/* <Thenavbar></Thenavbar>
-      <HomeView/>
-      <UserMoney credit={userCredit} /> */}
     </div>
   );
 }
